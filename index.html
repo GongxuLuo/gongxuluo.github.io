@@ -1,7 +1,93 @@
 <!doctype html>
-<html>
-  <head><meta charset="utf-8"><title>My site</title></head>
-  <body>
-    <h1>Hello GitHub Pages!</h1>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Deconfounded GRN: From Observations to Causality</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;max-width:1050px;margin:28px auto;padding:0 16px;line-height:1.55}
+    header{border-bottom:1px solid #eee;padding-bottom:14px;margin-bottom:18px}
+    h1{margin:0 0 6px 0;font-size:28px}
+    .muted{color:#666}
+    .card{border:1px solid #eee;border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 1px 10px rgba(0,0,0,.04)}
+    .kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#666;margin:0 0 8px 0}
+    .row{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+    @media (max-width: 900px){ .row{grid-template-columns:1fr;} }
+    .btn{display:inline-block;border:1px solid #ddd;border-radius:10px;padding:8px 10px;text-decoration:none;color:#0b57d0;background:#fafafa}
+    .btn:hover{background:#f3f3f3}
+    .pdfbox{width:100%;height:620px;border:1px solid #eee;border-radius:12px;overflow:hidden}
+    img{max-width:100%;border-radius:12px;border:1px solid #eee}
+    code{background:#f6f6f6;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Observed Dependencies ≠ True Regulation</h1>
+    <div class="muted">
+      Dense gene–gene dependencies in observational data may reflect regulation, latent confounding, and selection effects.
+    </div>
+  </header>
+
+  <section class="card">
+    <div class="kicker">1. Observation</div>
+    <div class="row">
+      <div>
+        <p>
+          We start from the <b>observed dependency graph</b> among genes inferred from observational measurements.
+          The graph is often dense, suggesting widespread interactions.
+        </p>
+        <p>
+          But if <i>all</i> dependencies were due to direct regulation, the implied regulatory system would be
+          unrealistically complex.
+        </p>
+      </div>
+      <div class="muted">
+        <p><b>Key question</b></p>
+        <p>
+          Should the regulatory network be this dense if dependencies only arise from regulation?
+        </p>
+        <p>
+          We hypothesize that part of the observed structure is induced by <b>latent confounders</b> (e.g., non-coding RNAs)
+          and <b>selection</b> (e.g., survival mechanisms, QC filters).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="kicker">2. Evidence: Observed dependency graph</div>
+
+    <p>
+      Figure: observed dependencies among genes (PDF).
+      <a class="btn" href="assets/figures/observed_dependencies.pdf" target="_blank" rel="noopener">Open PDF</a>
+      <a class="btn" href="assets/figures/observed_dependencies.pdf" download>Download</a>
+    </p>
+
+    <!-- PDF embed (works in most desktop browsers) -->
+    <object class="pdfbox" data="assets/figures/observed_dependencies.pdf" type="application/pdf">
+      <p class="muted">
+        Your browser cannot display embedded PDFs. Please use the “Open PDF” button above.
+      </p>
+      <!-- Optional fallback image (recommended) -->
+      <img src="assets/figures/observed_dependencies.png" alt="Observed dependency graph (preview)" />
+    </object>
+
+    <p class="muted">
+      Tip: for best compatibility, include a PNG preview at
+      <code>assets/figures/observed_dependencies.png</code>.
+    </p>
+  </section>
+
+  <section class="card">
+    <div class="kicker">3. Next</div>
+    <p>
+      Next, we design algorithms to disentangle <b>causal regulation</b>, <b>latent confounding</b>, and <b>selection</b>.
+      (Add links to method/results pages here when ready.)
+    </p>
+    <p class="muted">
+      Suggested next pages: <code>runs/method.html</code>, <code>runs/results.html</code>
+    </p>
+  </section>
+
+</body>
 </html>
