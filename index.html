@@ -78,8 +78,46 @@
     </p>
   </section>
 
+  <section class="card" id="sec-3-1">
+  <div class="kicker">3.1</div>
+  <h2 style="margin-top:0;">Biological constraints such as survival mechanisms are a selection process</h2>
+
+  <div class="two-col">
+    <!-- Left: PDF figure -->
+    <div>
+      <p class="muted" style="margin-top:0;">
+        Figure: selection-induced structure (PDF).
+        <a class="btn" href="assets/figures/selection_survival.pdf" target="_blank" rel="noopener">Open PDF</a>
+      </p>
+
+      <object class="pdfbox" data="assets/figures/selection_survival.pdf" type="application/pdf">
+        <p class="muted">
+          Your browser cannot display embedded PDFs. Please use “Open PDF”.
+        </p>
+        <!-- Optional fallback image -->
+        <img src="assets/figures/selection_survival.png" alt="Selection figure preview" />
+      </object>
+    </div>
+
+    <!-- Right: scrollable z-score panel -->
+    <aside class="zpanel">
+      <div class="zpanel-header">
+        <div>
+          <div style="font-weight:600;">Point z-scores</div>
+          <div class="muted" style="font-size:12px;">Scroll to view all points</div>
+        </div>
+        <input id="zFilter" class="zfilter" placeholder="Filter by id…" />
+      </div>
+
+      <div class="zpanel-body" id="zList">
+        <!-- JS will render rows here -->
+      </div>
+    </aside>
+  </div>
+</section>
+
   <section class="card">
-    <div class="kicker">3. Next</div>
+    <div class="kicker"> Next</div>
     <p>
       Next, we design algorithms to disentangle <b>causal regulation</b>, <b>latent confounding</b>, and <b>selection</b>.
       (Add links to method/results pages here when ready.)
