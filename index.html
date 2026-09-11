@@ -121,6 +121,72 @@
       font:inherit;
     }
     .cell-line-select:focus{outline:2px solid #0b57d0;outline-offset:2px}
+    .cell-line-panel{margin-top:20px;padding-top:18px;border-top:1px solid #eee}
+    .cell-line-panel[hidden],.cell-line-message[hidden]{display:none}
+    .cell-line-panel h3{margin:0;font-size:18px}
+    .dataset-stats{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      margin:16px 0 22px;
+      border-top:1px solid #eee;
+      border-bottom:1px solid #eee;
+    }
+    .dataset-stat{padding:14px 16px;border-left:1px solid #eee}
+    .dataset-stat:first-child{border-left:0}
+    .stat-value{display:block;font-size:22px;font-weight:700;color:#222}
+    .stat-label{display:block;margin-top:2px;font-size:12px;color:#666}
+    .pair-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:24px}
+    .pair-count{padding:11px 12px;border-left:3px solid #287a68;background:#fafafa}
+    .pair-count:nth-child(2){border-left-color:#a66d14}
+    .pair-count:nth-child(3){border-left-color:#8b4f81}
+    .pair-count strong{display:block;font-size:17px}
+    .pair-count span{display:block;font-size:12px;color:#666}
+    .relation-query{padding-top:20px;border-top:1px solid #eee}
+    .relation-query h3{margin:0 0 6px}
+    .gene-query{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;
+      gap:12px;
+      align-items:end;
+      margin-top:16px;
+    }
+    .gene-field label{display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:#444}
+    .gene-input{
+      box-sizing:border-box;
+      width:100%;
+      border:1px solid #ccc;
+      border-radius:8px;
+      padding:10px 12px;
+      background:#fff;
+      color:#222;
+      font:inherit;
+    }
+    .gene-input:focus{outline:2px solid #0b57d0;outline-offset:2px}
+    .query-button{
+      min-height:43px;
+      border:1px solid #0b57d0;
+      border-radius:8px;
+      padding:9px 14px;
+      background:#0b57d0;
+      color:#fff;
+      font:600 14px/1.2 inherit;
+      cursor:pointer;
+    }
+    .query-button:hover{background:#0949af}
+    .query-result{min-height:64px;margin-top:16px;padding:14px;border:1px solid #ddd;border-radius:8px;background:#fff}
+    .query-result p{margin:0}
+    .result-pair{margin-bottom:10px;font-weight:700}
+    .relation-row{display:grid;grid-template-columns:170px 1fr;gap:12px;padding:9px 0;border-top:1px solid #eee}
+    .relation-name{font-weight:600;color:#444}
+    .relation-value{color:#222}
+    .cell-line-message{margin:14px 0 0;color:#666}
+    @media (max-width:760px){
+      .dataset-stats,.pair-summary,.gene-query{grid-template-columns:1fr}
+      .dataset-stat{border-left:0;border-top:1px solid #eee}
+      .dataset-stat:first-child{border-top:0}
+      .query-button{width:100%}
+      .relation-row{grid-template-columns:1fr;gap:3px}
+    }
 
   </style>
 </head>
@@ -254,6 +320,64 @@
       <option value="hct116">HCT116 colorectal cancer cell line</option>
       <option value="k562">K562 leukemia cell line</option>
     </select>
+
+    <p id="cellLineMessage" class="cell-line-message">Select a cell line to view available results.</p>
+
+    <div id="hct116Panel" class="cell-line-panel" hidden>
+      <h3>HCT116 Colorectal Cancer Cell Line</h3>
+
+      <div class="dataset-stats" aria-label="HCT116 dataset summary">
+        <div class="dataset-stat">
+          <span class="stat-value">5,000</span>
+          <span class="stat-label">Genes</span>
+        </div>
+        <div class="dataset-stat">
+          <span class="stat-value">607,134</span>
+          <span class="stat-label">Unique cells</span>
+        </div>
+        <div class="dataset-stat">
+          <span class="stat-value">1,423</span>
+          <span class="stat-label">Perturbed genes</span>
+        </div>
+      </div>
+
+      <div class="pair-summary" aria-label="HCT116 relationship counts">
+        <div class="pair-count">
+          <strong>321</strong>
+          <span>Causal pairs</span>
+        </div>
+        <div class="pair-count">
+          <strong>40</strong>
+          <span>Pairs under latent confounding</span>
+        </div>
+        <div class="pair-count">
+          <strong>306</strong>
+          <span>Pairs under selection constraints</span>
+        </div>
+      </div>
+
+      <div class="relation-query">
+        <h3>Gene Pair Relationship</h3>
+        <p class="muted">Each mechanism is reported separately because a gene pair may have more than one source of dependence.</p>
+
+        <div class="gene-query">
+          <div class="gene-field">
+            <label for="hctGene1">Gene 1</label>
+            <input id="hctGene1" class="gene-input" list="hct116Genes" autocomplete="off" placeholder="Select or type a gene" />
+          </div>
+          <div class="gene-field">
+            <label for="hctGene2">Gene 2</label>
+            <input id="hctGene2" class="gene-input" list="hct116Genes" autocomplete="off" placeholder="Select or type a gene" />
+          </div>
+          <button id="queryRelationship" class="query-button" type="button">Query relationship</button>
+        </div>
+
+        <datalist id="hct116Genes"></datalist>
+        <div id="relationshipResult" class="query-result" aria-live="polite">
+          <p class="muted">Select two genes from the HCT116 result set.</p>
+        </div>
+      </div>
+    </div>
   </section>
 <script>
   // ACH-000551 values for genes pointing to selection variables in Figure 5.
@@ -270,6 +394,10 @@
     { id: "OGG1", z: 0.18088866708352572 },
     { id: "AURKA", z: -1.881049625087607 },
   ];
+
+  // HCT116_RELATION_DATA_START
+  const hct116Relations = [["ABCC1","CMIP","ABCC1 -> CMIP",0,1],["ABCC4","ATP11A","ATP11A -> ABCC4",0,1],["ABCC4","FARP1","ABCC4 -> FARP1",0,1],["ABCC4","IPO5","",1,0],["ACSL5","PPARG","ACSL5 -> PPARG",0,0],["ACTN4","EEF2","EEF2 -> ACTN4",0,0],["ACTN4","H2AC12","ACTN4 -> H2AC12",0,1],["ACTN4","LMNA","",0,1],["ACTN4","MYH9","ACTN4 -> MYH9",0,0],["AHI1","ARID1B","AHI1 -> ARID1B",0,1],["AKAP12","CAV1","CAV1 -> AKAP12",0,1],["AKAP12","ERRFI1","ERRFI1 -> AKAP12",0,1],["AKAP12","FTH1","FTH1 -> AKAP12",0,1],["AKAP12","GPRC5A","GPRC5A -> AKAP12",0,1],["AKAP12","HSPB1","HSPB1 -> AKAP12",0,1],["AKAP12","KRT19","KRT19 -> AKAP12",1,0],["AKAP12","MALL","MALL -> AKAP12",0,1],["AKAP13","FRMD5","AKAP13 -> FRMD5",0,1],["ALDH1A3","FTH1","ALDH1A3 -> FTH1",0,1],["ALDH1A3","KRT19","KRT19 -> ALDH1A3",0,1],["ALDH1A3","MTAP","MTAP -> ALDH1A3",0,1],["ALDH1A3","MTUS1","MTUS1 -> ALDH1A3",0,1],["ALDH1A3","MYOF","MYOF -> ALDH1A3",0,1],["ALDH1A3","RBP1","RBP1 -> ALDH1A3",0,1],["ALPK1","ESRP1","ESRP1 -> ALPK1",0,1],["ALPK1","LCORL","LCORL -> ALPK1",0,1],["ALPK1","SCLT1","SCLT1 -> ALPK1",0,1],["ANK2","SYT1","SYT1 -> ANK2",0,1],["ANKHD1","UBE2D2","UBE2D2 -> ANKHD1",0,1],["ANKRD11","CMIP","CMIP -> ANKRD11",0,1],["ANKRD11","PSAT1","PSAT1 -> ANKRD11",0,1],["ANP32A","HNRNPH3","ANP32A -> HNRNPH3",0,0],["ANP32A","PKM","ANP32A -> PKM",0,1],["ANP32E","EIF4G2","EIF4G2 -> ANP32E",0,0],["AP2S1","SELENOW","SELENOW -> AP2S1",0,1],["APBB2","CMIP","APBB2 -> CMIP",0,1],["APBB2","FRMD5","FRMD5 -> APBB2",0,1],["APBB2","RBPJ","APBB2 -> RBPJ",0,1],["APBB2","UBE2K","UBE2K -> APBB2",0,1],["APBB2","ZBTB20","APBB2 -> ZBTB20",0,1],["ARFIP1","FBXW7","ARFIP1 -> FBXW7",0,1],["ARFIP1","TMEM131L","ARFIP1 -> TMEM131L",0,1],["ARHGAP18","MBNL1","ARHGAP18 -> MBNL1",0,1],["ARHGAP18","PTPRK","ARHGAP18 -> PTPRK",0,1],["ARHGAP18","SYT1","ARHGAP18 -> SYT1",0,1],["ARID1B","NHSL1","ARID1B -> NHSL1",0,0],["ARID4B","CDC42BPA","",0,1],["ARID4B","EPRS1","EPRS1 -> ARID4B",0,0],["ARIH1","PEAK1","ARIH1 -> PEAK1",0,1],["ARMH3","TCF7L2","",0,1],["ARMH3","VTI1A","ARMH3 -> VTI1A",0,1],["ARPC3","SLC25A3","SLC25A3 -> ARPC3",1,0],["ARPC5L","C9orf78","C9orf78 -> ARPC5L",0,0],["ASPM","CENPF","ASPM -> CENPF",0,1],["ASPM","KIF14","ASPM -> KIF14",0,1],["ASPM","SCLT1","SCLT1 -> ASPM",0,1],["ATE1","VTI1A","",0,1],["ATF3","CDKN1A","",0,1],["ATF4","BTG1","ATF4 -> BTG1",0,1],["ATF4","CLIC4","CLIC4 -> ATF4",0,1],["ATF4","DDIT4","ATF4 -> DDIT4",0,1],["ATF4","MARS1","ATF4 -> MARS1",0,1],["ATF4","PSAT1","PSAT1 -> ATF4",1,0],["ATF4","XBP1","XBP1 -> ATF4",0,1],["ATG7","SETD5","",0,1],["ATG7","VGLL4","ATG7 -> VGLL4",0,1],["ATP11A","FARP1","",0,1],["ATP11A","UBAC2","UBAC2 -> ATP11A",0,1],["ATP5F1A","ATP5F1B","ATP5F1A -> ATP5F1B",0,1],["ATP5F1B","SLC25A3","SLC25A3 -> ATP5F1B",1,0],["ATP5MC1","FABP5","FABP5 -> ATP5MC1",0,0],["ATP5MC1","LAMTOR4","ATP5MC1 -> LAMTOR4",0,0],["ATP5MC3","LDHA","",1,0],["ATP5MC3","NDUFB3","ATP5MC3 -> NDUFB3",1,0],["ATP9B","RTTN","ATP9B -> RTTN",0,1],["B2M","EMP3","EMP3 -> B2M",0,1],["B2M","LGALS1","B2M -> LGALS1",0,1],["B2M","SRP14","SRP14 -> B2M",0,1],["BCAR3","F3","BCAR3 -> F3",0,1],["BCAR3","NAV3","BCAR3 -> NAV3",0,1],["BCL2L1","HTR7","BCL2L1 -> HTR7",0,1],["BCL2L1","SYTL3","SYTL3 -> BCL2L1",0,1],["BMERB1","MAML3","BMERB1 -> MAML3",0,1],["BMERB1","TBC1D19","",0,1],["BMP4","KRT19","",0,1],["BMP4","TANK","TANK -> BMP4",0,1],["BRIP1","EXO1","EXO1 -> BRIP1",0,1],["BRIP1","FANCI","FANCI -> BRIP1",0,1],["BRIP1","POLQ","POLQ -> BRIP1",0,1],["BRIP1","RTTN","BRIP1 -> RTTN",0,1],["BRIP1","SYNE2","BRIP1 -> SYNE2",0,1],["BTF3","SUB1","BTF3 -> SUB1",1,0],["C12orf57","PTMS","C12orf57 -> PTMS",0,1],["CACYBP","DNAJA1","DNAJA1 -> CACYBP",1,0],["CACYBP","HSP90AA1","HSP90AA1 -> CACYBP",1,0],["CACYBP","HSPB1","CACYBP -> HSPB1",0,1],["CACYBP","HSPE1","CACYBP -> HSPE1",0,1],["CACYBP","PRRC2C","PRRC2C -> CACYBP",0,1],["CALM1","DDX24","DDX24 -> CALM1",0,1],["CALM1","HSP90AA1","HSP90AA1 -> CALM1",1,0],["CALM1","LGALS3","",0,1],["CAMKMT","USP34","CAMKMT -> USP34",0,1],["CAV1","CLU","",0,1],["CAV1","F3","",0,1],["CAV1","MTUS1","",0,1],["CAV1","SAT1","CAV1 -> SAT1",0,1],["CCDC18","SCLT1","SCLT1 -> CCDC18",0,1],["CCND1","KRT19","",0,1],["CCND1","RBP1","RBP1 -> CCND1",0,1],["CCNF","CIT","CCNF -> CIT",0,1],["CCNG1","RPS27L","CCNG1 -> RPS27L",0,1],["CD81","IFITM3","IFITM3 -> CD81",0,0],["CD81","TUBB4B","CD81 -> TUBB4B",0,1],["CDC37","EEF2","CDC37 -> EEF2",0,1],["CDC42BPA","RPS6KC1","CDC42BPA -> RPS6KC1",0,0],["CDC42BPA","SLC35F3","",1,0],["CDKN1A","CMBL","CMBL -> CDKN1A",0,1],["CDKN1A","GADD45A","",0,1],["CDKN1A","PLK2","PLK2 -> CDKN1A",0,1],["CDKN1A","S100A6","S100A6 -> CDKN1A",0,1],["CDKN1A","TIGAR","TIGAR -> CDKN1A",0,1],["CDKN1A","XPC","XPC -> CDKN1A",0,1],["CENPF","CKS2","CKS2 -> CENPF",0,1],["CENPF","DEPDC1","DEPDC1 -> CENPF",0,1],["CENPF","KPNA2","",0,1],["CENPF","SMC4","",1,0],["CENPF","TUBB4B","CENPF -> TUBB4B",0,1],["CIT","POLQ","POLQ -> CIT",0,1],["CIT","SCLT1","",0,1],["CIT","WDPCP","WDPCP -> CIT",0,1],["CKLF","HSPB1","CKLF -> HSPB1",0,1],["CKS2","DEPDC1","DEPDC1 -> CKS2",0,1],["CKS2","KIFC1","KIFC1 -> CKS2",0,1],["CKS2","KNSTRN","KNSTRN -> CKS2",0,1],["CLDN4","S100A14","S100A14 -> CLDN4",0,0],["CLIC1","CSNK2B","CSNK2B -> CLIC1",0,1],["CLU","TMSB4X","CLU -> TMSB4X",0,1],["CMBL","DAP","CMBL -> DAP",0,1],["CMBL","PDCD6","PDCD6 -> CMBL",0,1],["CMIP","USP10","USP10 -> CMIP",0,1],["CMSS1","ZBTB20","CMSS1 -> ZBTB20",0,1],["CMTM7","MAP4","",1,0],["COMMD1","USP34","COMMD1 -> USP34",0,1],["COX6A1","PEBP1","COX6A1 -> PEBP1",0,1],["CPA4","KRT19","KRT19 -> CPA4",0,1],["CRIM1","NAV3","CRIM1 -> NAV3",0,1],["CRIM1","PPFIBP1","",0,1],["CSNK1A1","UBE2D2","UBE2D2 -> CSNK1A1",0,1],["CSNK2B","CUTA","CUTA -> CSNK2B",0,1],["CSTA","MTHFD2","CSTA -> MTHFD2",0,0],["CUEDC1","NHSL1","CUEDC1 -> NHSL1",0,1],["CUEDC1","RNF43","CUEDC1 -> RNF43",0,1],["CUTA","SNRPC","CUTA -> SNRPC",0,1],["DBI","HSPE1","DBI -> HSPE1",0,0],["DCBLD2","FAT1","",0,1],["DCBLD2","NTSR1","NTSR1 -> DCBLD2",0,1],["DCBLD2","ZBTB20","ZBTB20 -> DCBLD2",0,1],["DDIT4","FAM107B","DDIT4 -> FAM107B",1,0],["DDIT4","FAM241A","FAM241A -> DDIT4",0,1],["DDIT4","GADD45A","GADD45A -> DDIT4",0,1],["DDIT4","ID1","ID1 -> DDIT4",0,1],["DDIT4","IER2","IER2 -> DDIT4",0,1],["DDIT4","PSAT1","PSAT1 -> DDIT4",0,1],["DDIT4","S100A14","S100A14 -> DDIT4",0,1],["DDIT4","XBP1","XBP1 -> DDIT4",0,1],["DDIT4","ZCCHC8","ZCCHC8 -> DDIT4",0,1],["DHCR24","FDFT1","DHCR24 -> FDFT1",0,1],["DHRS3","ID1","DHRS3 -> ID1",0,1],["DHRS3","IER5L","IER5L -> DHRS3",0,1],["DISP1","GPATCH2","GPATCH2 -> DISP1",0,1],["DNAJA1","TUBB4B","DNAJA1 -> TUBB4B",0,1],["DST","PHF3","PHF3 -> DST",0,1],["DST","SLC35F3","",1,0],["DUSP6","PHC2","DUSP6 -> PHC2",0,1],["EDF1","TUBB4B","EDF1 -> TUBB4B",0,1],["EEF1A2","LGALS1","",0,1],["EEF2","UHRF1","UHRF1 -> EEF2",0,1],["EIF3H","TAF2","",0,1],["EMP3","TECR","TECR -> EMP3",0,1],["EPRS1","MTHFD2","",0,1],["ERH","TMED10","TMED10 -> ERH",0,1],["ERRFI1","GPRC5A","GPRC5A -> ERRFI1",0,1],["ERRFI1","TRIB1","ERRFI1 -> TRIB1",0,0],["ESYT2","LMBR1","LMBR1 -> ESYT2",0,1],["F3","SLC35F3","SLC35F3 -> F3",0,1],["FAR1","TEAD1","FAR1 -> TEAD1",0,1],["FARP1","UBAC2","UBAC2 -> FARP1",0,1],["FAT1","FBXW7","FBXW7 -> FAT1",0,0],["FAT1","KITLG","KITLG -> FAT1",0,1],["FAT1","MAML3","MAML3 -> FAT1",1,0],["FAT1","NAF1","NAF1 -> FAT1",0,1],["FAT1","NR6A1","NR6A1 -> FAT1",0,1],["FAT1","RNF43","RNF43 -> FAT1",0,1],["FAT1","SH3RF1","",0,1],["FAT1","TBC1D19","",0,1],["FAT1","TMEM131L","TMEM131L -> FAT1",0,1],["FBXL5","LCORL","LCORL -> FBXL5",0,1],["FOXP1","MAML3","FOXP1 -> MAML3",0,1],["FRMD5","NAV3","FRMD5 -> NAV3",0,1],["FRMD5","NFAT5","FRMD5 -> NFAT5",0,1],["FRMD5","NR6A1","NR6A1 -> FRMD5",0,1],["FRMD5","RNF43","RNF43 -> FRMD5",0,0],["FRMD5","SLC35F3","",0,1],["FRMD5","SRGAP1","FRMD5 -> SRGAP1",0,1],["FRMD5","SYT1","FRMD5 -> SYT1",0,1],["FSCN1","RAC1","RAC1 -> FSCN1",0,1],["FTH1","HSPB1","",0,1],["FTH1","KRT8","KRT8 -> FTH1",1,0],["FTH1","LGALS3","LGALS3 -> FTH1",0,1],["FTH1","NQO1","",0,1],["FUS","SFPQ","FUS -> SFPQ",0,1],["GADD45A","IER2","GADD45A -> IER2",0,1],["GADD45A","SFN","GADD45A -> SFN",1,0],["GAPDH","NQO1","GAPDH -> NQO1",1,0],["GAPDH","S100A6","GAPDH -> S100A6",1,0],["GAPDH","TPI1","GAPDH -> TPI1",1,0],["GPAT3","PPARG","PPARG -> GPAT3",0,0],["GPATCH2","PPP1R12B","GPATCH2 -> PPP1R12B",0,1],["GPATCH2","RPS6KC1","",0,1],["GPRC5A","MYOF","MYOF -> GPRC5A",0,0],["GPRC5A","SRGAP1","",0,1],["H2AC12","H2AC20","H2AC20 -> H2AC12",1,0],["H2AC12","H3C2","H3C2 -> H2AC12",1,0],["H2AC20","SOX4","SOX4 -> H2AC20",0,1],["H2AX","KPNA2","H2AX -> KPNA2",0,1],["H3-3B","HSPE1","H3-3B -> HSPE1",0,0],["H3-3B","TUBB4B","H3-3B -> TUBB4B",0,0],["HDLBP","NCL","HDLBP -> NCL",1,0],["HMGA1","NCL","NCL -> HMGA1",1,0],["HMGA1","PHC2","",0,1],["HMGB3","LAGE3","LAGE3 -> HMGB3",0,1],["HNRNPA2B1","HNRNPM","HNRNPA2B1 -> HNRNPM",0,1],["HNRNPA2B1","SEPTIN7","SEPTIN7 -> HNRNPA2B1",0,1],["HNRNPA2B1","SFPQ","SFPQ -> HNRNPA2B1",0,1],["HSP90AA1","HSPB1","HSP90AA1 -> HSPB1",1,0],["HSP90AA1","HSPE1","HSP90AA1 -> HSPE1",0,1],["HSP90AA1","RCOR1","HSP90AA1 -> RCOR1",0,0],["HSPB1","HSPE1","HSPB1 -> HSPE1",0,0],["HSPB1","LGALS1","HSPB1 -> LGALS1",0,1],["HSPB1","PTMS","PTMS -> HSPB1",0,1],["HSPE1","NDUFB3","HSPE1 -> NDUFB3",0,1],["HSPE1","SELENOW","HSPE1 -> SELENOW",0,0],["HSPE1","SPATS2L","",0,1],["HTR7","MBNL1","MBNL1 -> HTR7",0,1],["HTR7","OPHN1","OPHN1 -> HTR7",0,1],["HTR7","PPARG","HTR7 -> PPARG",1,0],["HTR7","TCF7L2","TCF7L2 -> HTR7",0,1],["ID1","ID3","ID3 -> ID1",0,1],["ID1","IER2","IER2 -> ID1",0,1],["ID1","IER5L","IER5L -> ID1",0,1],["ID1","MALL","MALL -> ID1",0,1],["ID1","RHOBTB3","RHOBTB3 -> ID1",0,1],["ID2","ID3","ID3 -> ID2",0,1],["ID2","LGALS3","LGALS3 -> ID2",1,0],["ID2","RHOBTB3","RHOBTB3 -> ID2",0,1],["ID3","RHOBTB3","",0,1],["IFITM3","KRT8","",1,0],["IFITM3","LGALS1","",1,0],["IFITM3","PSME2","PSME2 -> IFITM3",0,1],["IGF2BP2","LPP","",0,1],["IGF2BP2","SENP5","SENP5 -> IGF2BP2",0,1],["IGF2BP3","PALS2","PALS2 -> IGF2BP3",0,1],["IGF2BP3","SAMD3","IGF2BP3 -> SAMD3",0,1],["IGF2BP3","SPATS2","SPATS2 -> IGF2BP3",0,1],["IGF2BP3","TBC1D19","TBC1D19 -> IGF2BP3",0,1],["IGF2BP3","TRA2A","IGF2BP3 -> TRA2A",0,1],["INPP4B","SCLT1","SCLT1 -> INPP4B",0,1],["INPP4B","TIAM1","TIAM1 -> INPP4B",0,1],["INPP4B","TMEM131L","TMEM131L -> INPP4B",0,1],["ITSN2","RAB10","ITSN2 -> RAB10",0,1],["KIAA2026","RFX3","",0,1],["KIF18A","METTL15","KIF18A -> METTL15",0,1],["KIF18A","SCLT1","",0,1],["KITLG","SH3RF1","SH3RF1 -> KITLG",0,1],["KITLG","SYT1","SYT1 -> KITLG",0,1],["KITLG","ZBTB20","ZBTB20 -> KITLG",0,1],["KLK8","RBP1","KLK8 -> RBP1",0,1],["KLK8","S100A14","KLK8 -> S100A14",0,1],["KPNA2","TUBB4B","KPNA2 -> TUBB4B",0,1],["KRT19","LMNA","LMNA -> KRT19",0,1],["KRT19","PLK2","",0,1],["KRT19","S100A6","S100A6 -> KRT19",0,1],["KRT19","SFN","KRT19 -> SFN",0,0],["KRT8","S100A6","KRT8 -> S100A6",1,0],["LAGE3","SSR4","LAGE3 -> SSR4",0,1],["LGALS1","RABAC1","RABAC1 -> LGALS1",0,1],["LGALS1","S100A10","LGALS1 -> S100A10",0,0],["LGALS1","TMSB4X","LGALS1 -> TMSB4X",0,0],["LGALS3","S100A6","LGALS3 -> S100A6",0,1],["LIMA1","S100A14","",0,1],["LMNA","PKM","LMNA -> PKM",0,1],["LPP","LRCH3","LRCH3 -> LPP",0,1],["LRCH3","SENP5","SENP5 -> LRCH3",0,1],["LRCH3","VPS8","",0,1],["LRCH3","ZMAT3","LRCH3 -> ZMAT3",0,1],["LSM5","SEPTIN7","",1,0],["MAML3","TMEM131L","TMEM131L -> MAML3",0,1],["MAP3K5","SAMD5","",0,1],["MAP4","SMARCC1","SMARCC1 -> MAP4",0,1],["MARS1","PSAT1","MARS1 -> PSAT1",0,0],["MCC","WWC1","WWC1 -> MCC",0,1],["MIF","UQCRQ","UQCRQ -> MIF",0,0],["MRPL57","SAP18","MRPL57 -> SAP18",0,1],["MRPS12","POLR1G","POLR1G -> MRPS12",0,1],["MT2A","NQO1","MT2A -> NQO1",0,1],["MTHFD2","PSAT1","MTHFD2 -> PSAT1",0,0],["MTHFD2","SLC1A5","MTHFD2 -> SLC1A5",1,0],["MTUS1","PCM1","PCM1 -> MTUS1",0,1],["NAF1","TMEM131L","NAF1 -> TMEM131L",0,1],["NAV3","PLK2","",0,1],["NCL","RSL1D1","NCL -> RSL1D1",1,0],["NCL","SERBP1","NCL -> SERBP1",0,0],["NDUFS5","SOX4","SOX4 -> NDUFS5",0,0],["NEBL","NHS","NHS -> NEBL",0,1],["NEBL","NR6A1","NR6A1 -> NEBL",0,1],["NEBL","SAMD5","SAMD5 -> NEBL",0,1],["NFAT5","NFATC3","NFATC3 -> NFAT5",0,1],["NHSL1","NR6A1","NR6A1 -> NHSL1",0,1],["NHSL1","RUNX1","RUNX1 -> NHSL1",0,0],["NHSL1","SYNE2","SYNE2 -> NHSL1",0,1],["NME2","PHB1","NME2 -> PHB1",1,0],["NOB1","NQO1","NOB1 -> NQO1",0,1],["NQO1","TKT","TKT -> NQO1",0,1],["NR6A1","TCF7L2","NR6A1 -> TCF7L2",0,1],["NR6A1","VTI1A","NR6A1 -> VTI1A",0,1],["NTSR1","PHC2","",0,1],["PDS5A","UBE2K","UBE2K -> PDS5A",0,1],["PEBP1","RFC5","RFC5 -> PEBP1",0,1],["PEBP1","SLC25A3","SLC25A3 -> PEBP1",1,0],["PHC2","TBC1D19","TBC1D19 -> PHC2",0,1],["PHLDA1","ZFP36L1","",0,1],["PLAGL1","QKI","PLAGL1 -> QKI",0,1],["PLK2","SOX4","SOX4 -> PLK2",0,1],["PLP2","TMSB4X","TMSB4X -> PLP2",0,1],["PPARG","SYT1","SYT1 -> PPARG",0,0],["PPARG","VGLL4","VGLL4 -> PPARG",0,1],["PPFIBP1","SRGAP1","PPFIBP1 -> SRGAP1",0,1],["PPFIBP1","ZNF804A","PPFIBP1 -> ZNF804A",0,1],["PRRC2C","RABGAP1L","",0,1],["PRRC2C","SON","PRRC2C -> SON",0,1],["PSPC1","SFPQ","PSPC1 -> SFPQ",0,1],["PTMS","TPI1","PTMS -> TPI1",0,1],["PTPRG","SLC35F3","",0,1],["RAB25","S100A14","RAB25 -> S100A14",0,1],["RBP1","SFN","RBP1 -> SFN",0,1],["RBPJ","TBC1D19","RBPJ -> TBC1D19",0,1],["RCOR1","SIPA1L1","RCOR1 -> SIPA1L1",0,1],["RHOBTB3","RNF43","RHOBTB3 -> RNF43",0,1],["RHOBTB3","SFN","",0,1],["RHOBTB3","SOX4","RHOBTB3 -> SOX4",0,1],["RHOBTB3","TMSB4X","RHOBTB3 -> TMSB4X",0,1],["RNF43","SOX4","",1,0],["RPL22","RPS29","RPL22 -> RPS29",0,1],["RPL36A","SEM1","RPL36A -> SEM1",0,1],["RPL36A","TCEAL4","RPL36A -> TCEAL4",0,1],["RPS27L","S100A14","S100A14 -> RPS27L",0,1],["RUNX1","TIAM1","TIAM1 -> RUNX1",0,1],["S100A10","SFN","SFN -> S100A10",0,1],["S100A14","S100A6","S100A6 -> S100A14",0,1],["S100A6","SFN","S100A6 -> SFN",0,1],["SAMD3","SAMD5","",0,1],["SAMD3","ZNF804A","SAMD3 -> ZNF804A",0,1],["SAMD5","ZC3H12B","SAMD5 -> ZC3H12B",0,1],["SAT1","TIMP1","SAT1 -> TIMP1",0,1],["SAT1","TMSB4X","",0,1],["SBF2","STK33","STK33 -> SBF2",0,1],["SFN","TUBB4B","SFN -> TUBB4B",0,1],["SH3RF1","SNX25","SNX25 -> SH3RF1",0,0],["SIPA1L1","SYNE2","SYNE2 -> SIPA1L1",0,1],["SLC25A6","TMSB4X","TMSB4X -> SLC25A6",0,1],["SLC35F3","THSD4","THSD4 -> SLC35F3",0,1],["SNX25","TMEM131L","TMEM131L -> SNX25",0,1],["SOX4","SSR2","SSR2 -> SOX4",0,1],["SOX4","SYT1","",0,1],["SOX4","TANK","",1,0],["SOX4","TMSB4X","SOX4 -> TMSB4X",0,1],["SYTL3","UTRN","SYTL3 -> UTRN",0,1],["TBC1D4","UBAC2","UBAC2 -> TBC1D4",0,1],["TCF7L2","ZBTB20","",1,0],["UBE2E1","VGLL4","UBE2E1 -> VGLL4",0,1],["UBXN7","YEATS2","YEATS2 -> UBXN7",0,1],["VTI1A","ZBTB20","",0,1]];
+  // HCT116_RELATION_DATA_END
 
   function fmtZ(z){
     const sign = z >= 0 ? "+" : "";
@@ -306,6 +434,106 @@
     if (!q) return renderZ(zscores);
     renderZ(zscores.filter(d => d.id.toLowerCase().includes(q)));
   });
+
+  const cellLineSelect = document.getElementById("cellLine");
+  const cellLineMessage = document.getElementById("cellLineMessage");
+  const hct116Panel = document.getElementById("hct116Panel");
+  const hctGene1 = document.getElementById("hctGene1");
+  const hctGene2 = document.getElementById("hctGene2");
+  const relationshipResult = document.getElementById("relationshipResult");
+
+  const hct116GeneNames = [...new Set(hct116Relations.flatMap(([gene1, gene2]) => [gene1, gene2]))]
+    .sort((a, b) => a.localeCompare(b));
+  const hct116GeneSet = new Set(hct116GeneNames);
+  const hct116RelationMap = new Map(
+    hct116Relations.map(([gene1, gene2, causal, latent, selection]) => [
+      `${gene1}|${gene2}`,
+      { causal, latent: Boolean(latent), selection: Boolean(selection) },
+    ])
+  );
+
+  const geneOptions = document.createDocumentFragment();
+  for (const gene of hct116GeneNames){
+    const option = document.createElement("option");
+    option.value = gene;
+    geneOptions.appendChild(option);
+  }
+  document.getElementById("hct116Genes").appendChild(geneOptions);
+
+  cellLineSelect.addEventListener("change", () => {
+    const selected = cellLineSelect.value;
+    const showHct116 = selected === "hct116";
+    hct116Panel.hidden = !showHct116;
+    cellLineMessage.hidden = showHct116;
+
+    if (selected === "a549") cellLineMessage.textContent = "A549 results are not available yet.";
+    if (selected === "k562") cellLineMessage.textContent = "K562 results are presented in the illustrative example above.";
+  });
+
+  function showQueryMessage(message){
+    relationshipResult.innerHTML = "";
+    const paragraph = document.createElement("p");
+    paragraph.className = "muted";
+    paragraph.textContent = message;
+    relationshipResult.appendChild(paragraph);
+  }
+
+  function appendRelationRow(label, value){
+    const row = document.createElement("div");
+    row.className = "relation-row";
+
+    const name = document.createElement("div");
+    name.className = "relation-name";
+    name.textContent = label;
+
+    const result = document.createElement("div");
+    result.className = "relation-value";
+    result.textContent = value;
+
+    row.append(name, result);
+    relationshipResult.appendChild(row);
+  }
+
+  function queryHct116Relationship(){
+    const gene1 = hctGene1.value.trim().toUpperCase();
+    const gene2 = hctGene2.value.trim().toUpperCase();
+
+    if (!hct116GeneSet.has(gene1) || !hct116GeneSet.has(gene2)){
+      showQueryMessage("Select two genes from the HCT116 result set.");
+      return;
+    }
+    if (gene1 === gene2){
+      showQueryMessage("Select two different genes.");
+      return;
+    }
+
+    hctGene1.value = gene1;
+    hctGene2.value = gene2;
+    const key = [gene1, gene2].sort().join("|");
+    const relation = hct116RelationMap.get(key);
+
+    if (!relation){
+      showQueryMessage(`No classified relationship was found for ${gene1} and ${gene2} in the provided HCT116 results.`);
+      return;
+    }
+
+    relationshipResult.innerHTML = "";
+    const heading = document.createElement("div");
+    heading.className = "result-pair";
+    heading.textContent = `${gene1} and ${gene2}`;
+    relationshipResult.appendChild(heading);
+
+    appendRelationRow("Causal relation", relation.causal ? relation.causal.replace(" -> ", " → ") : "Not identified");
+    appendRelationRow("Latent confounding", relation.latent ? "Identified" : "Not identified");
+    appendRelationRow("Selection constraint", relation.selection ? "Identified" : "Not identified");
+  }
+
+  document.getElementById("queryRelationship").addEventListener("click", queryHct116Relationship);
+  for (const input of [hctGene1, hctGene2]){
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") queryHct116Relationship();
+    });
+  }
 </script>
 </body>
 </html>
