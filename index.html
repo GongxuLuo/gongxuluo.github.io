@@ -122,30 +122,27 @@
   </header>
 
   <section class="card">
-    <div class="kicker">1. Assumptions</div>
-    <h2 class="assumption-title">Prior knowledge and causal interpretation</h2>
+    <h2 class="assumption-title">1. Assumptions: Gene expression is shaped by three classes of influence: regulation by TFs, latent factors, and selection-induced constraints (e.g., cellular viability)</h2>
     <p class="assumption-intro">
-      Based on prior knowledge, we consider three mechanisms that shape gene expression: regulatory interactions between genes,
-      unobserved factors that regulate multiple genes, and constraints induced by selection. Although biologically distinct,
-      all three can manifest statistically as conditional dependencies among genes. In causal terminology, we refer to them
-      as regulation, latent confounding, and selection, respectively.
+      Under these assumptions, the conditional dependencies observed among genes may arise from three distinct causal mechanisms:
+      regulation, latent confounding, and selection.
     </p>
 
     <div class="source-grid">
       <article class="source-item">
         <h3>Regulation</h3>
         <p>
-          Gene regulatory networks encode causal interactions through transcriptional regulation and downstream molecular processes.
-          The activity of one gene can therefore alter another gene's expression and induce a statistical dependency.
+          TFs can directly modulate the expression of their target genes.
+          These directed regulatory relationships generate dependencies between regulators and their targets.
         </p>
         <span class="source-graph">X → Y</span>
       </article>
 
       <article class="source-item">
-        <h3>Latent confounder</h3>
+        <h3>Latent confounding</h3>
         <p>
-          Two genes may share an unobserved cause, such as a non-coding RNA or an environmental stimulus.
-          This common influence can make their expression levels dependent even when neither gene directly regulates the other.
+          Unobserved regulatory factors, such as non-coding RNAs, epigenetic states, or environmental signals, may jointly influence multiple genes.
+          Their shared effects can induce dependencies even when no direct regulatory relationship exists between the genes.
         </p>
         <span class="source-graph">X ← L → Y</span>
       </article>
@@ -153,9 +150,8 @@
       <article class="source-item">
         <h3>Selection</h3>
         <p>
-          Evolutionary and cellular viability constraints determine which expression profiles can persist.
-          Only cells satisfying survival or inclusion criteria are observed and sequenced, so conditioning on the selected population can induce a dependency between otherwise independent genes.
-          Such constraints may reflect competition for shared cellular resources or differential activity across promoters and enhancers.
+          Evolutionary and cellular selection constrains which gene-expression profiles are viable.
+          Conditioning on survival, sampling, or inclusion can induce dependencies between genes that would otherwise be independent.
         </p>
         <span class="source-graph">X → S ← Y &nbsp; (observe S = 1)</span>
       </article>
