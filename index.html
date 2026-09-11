@@ -108,6 +108,19 @@
       color:#666;
       margin-left:8px;
     }
+    .other-lines-title{margin:0 0 12px;font-size:20px}
+    .cell-line-label{display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:#444}
+    .cell-line-select{
+      width:100%;
+      max-width:460px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      padding:10px 12px;
+      background:#fff;
+      color:#222;
+      font:inherit;
+    }
+    .cell-line-select:focus{outline:2px solid #0b57d0;outline-offset:2px}
 
   </style>
 </head>
@@ -209,8 +222,9 @@
       </object>
 
       <p>
-        The effect of selection on a gene can be evaluated using a Z-score, which captures the change in cellular growth rate
-        before and after perturbation.
+        The effect of selection on a gene can be assessed using a Z-score, which quantifies the change in cellular growth
+        following perturbation. Intuitively, perturbing a gene under strong selection constraints may disrupt a condition
+        required for cellular survival or proliferation, leading to a larger-magnitude Z-score.
       </p>
 
       <aside class="zpanel">
@@ -232,14 +246,14 @@
   </section>
 
   <section class="card">
-    <div class="kicker"> Next</div>
-    <p>
-      Next, we design algorithms to disentangle <b>causal regulation</b>, <b>latent confounding</b>, and <b>selection</b>.
-      (Add links to method/results pages here when ready.)
-    </p>
-    <p class="muted">
-      Suggested next pages: <code>runs/method.html</code>, <code>runs/results.html</code>
-    </p>
+    <h2 class="other-lines-title">Other Cell Lines</h2>
+    <label class="cell-line-label" for="cellLine">Cell line</label>
+    <select id="cellLine" class="cell-line-select">
+      <option value="" selected disabled>Select a cell line</option>
+      <option value="a549">A549 lung carcinoma cell line</option>
+      <option value="hct116">HCT116 colorectal cancer cell line</option>
+      <option value="k562">K562 leukemia cell line</option>
+    </select>
   </section>
 <script>
   // ACH-000551 values for genes pointing to selection variables in Figure 5.
