@@ -141,6 +141,22 @@
     .pair-count:nth-child(3){border-left-color:#8b4f81}
     .pair-count strong{display:block;font-size:17px}
     .pair-count span{display:block;font-size:12px;color:#666}
+    .pair-browser{padding:20px 0;border-top:1px solid #eee}
+    .pair-browser h3{margin:0 0 14px}
+    .pair-browser-controls{display:grid;grid-template-columns:minmax(190px,.7fr) minmax(280px,1.3fr);gap:12px}
+    .pair-browser-field label{display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:#444}
+    .pair-browser-select{
+      box-sizing:border-box;
+      width:100%;
+      border:1px solid #ccc;
+      border-radius:8px;
+      padding:10px 12px;
+      background:#fff;
+      color:#222;
+      font:inherit;
+    }
+    .pair-browser-select:focus{outline:2px solid #0b57d0;outline-offset:2px}
+    .pair-browser-select:disabled{background:#f6f6f6;color:#888}
     .relation-query{padding-top:20px;border-top:1px solid #eee}
     .relation-query h3{margin:0 0 6px}
     .gene-query{
@@ -181,7 +197,7 @@
     .relation-value{color:#222}
     .cell-line-message{margin:14px 0 0;color:#666}
     @media (max-width:760px){
-      .dataset-stats,.pair-summary,.gene-query{grid-template-columns:1fr}
+      .dataset-stats,.pair-summary,.pair-browser-controls,.gene-query{grid-template-columns:1fr}
       .dataset-stat{border-left:0;border-top:1px solid #eee}
       .dataset-stat:first-child{border-top:0}
       .query-button{width:100%}
@@ -357,6 +373,27 @@
         </div>
       </div>
 
+      <div class="pair-browser">
+        <h3>Browse All Gene Pairs</h3>
+        <div class="pair-browser-controls">
+          <div class="pair-browser-field">
+            <label for="hctPairType">Relationship type</label>
+            <select id="hctPairType" class="pair-browser-select">
+              <option value="" selected>Select a relationship type</option>
+              <option value="causal">Causal pairs (321)</option>
+              <option value="latent">Latent confounder pairs (40)</option>
+              <option value="selection">Selection bias pairs (306)</option>
+            </select>
+          </div>
+          <div class="pair-browser-field">
+            <label id="hctPairListLabel" for="hctPairList">Gene pair</label>
+            <select id="hctPairList" class="pair-browser-select" disabled>
+              <option value="" selected>Select a relationship type first</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <div class="relation-query">
         <h3>Gene Pair Relationship</h3>
         <p class="muted">Each mechanism is reported separately because a gene pair may have more than one source of dependence. For selection pairs, gene Z-scores are taken from ACH-000971.</p>
@@ -445,6 +482,9 @@
   const hct116Panel = document.getElementById("hct116Panel");
   const hctGene1 = document.getElementById("hctGene1");
   const hctGene2 = document.getElementById("hctGene2");
+  const hctPairType = document.getElementById("hctPairType");
+  const hctPairList = document.getElementById("hctPairList");
+  const hctPairListLabel = document.getElementById("hctPairListLabel");
   const relationshipResult = document.getElementById("relationshipResult");
 
   const hct116GeneNames = [...new Set(hct116Relations.flatMap(([gene1, gene2]) => [gene1, gene2]))]
@@ -456,6 +496,16 @@
       { causal, latent: Boolean(latent), selection: Boolean(selection) },
     ])
   );
+  const hct116PairGroups = {
+    causal: hct116Relations.filter(([, , causal]) => Boolean(causal)),
+    latent: hct116Relations.filter(([, , , latent]) => Boolean(latent)),
+    selection: hct116Relations.filter(([, , , , selection]) => Boolean(selection)),
+  };
+  const pairTypeNames = {
+    causal: "causal",
+    latent: "latent confounder",
+    selection: "selection bias",
+  };
 
   const geneOptions = document.createDocumentFragment();
   for (const gene of hct116GeneNames){
@@ -473,6 +523,36 @@
 
     if (selected === "a549") cellLineMessage.textContent = "A549 results are not available yet.";
     if (selected === "k562") cellLineMessage.textContent = "K562 results are presented in the illustrative example above.";
+  });
+
+  hctPairType.addEventListener("change", () => {
+    const type = hctPairType.value;
+    const records = hct116PairGroups[type] || [];
+    hctPairList.innerHTML = "";
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.selected = true;
+    placeholder.textContent = type ? `Select a ${pairTypeNames[type]} pair` : "Select a relationship type first";
+    hctPairList.appendChild(placeholder);
+
+    for (const [gene1, gene2] of records){
+      const option = document.createElement("option");
+      option.value = `${gene1}|${gene2}`;
+      option.textContent = `${gene1} - ${gene2}`;
+      hctPairList.appendChild(option);
+    }
+
+    hctPairList.disabled = !type;
+    hctPairListLabel.textContent = type ? `Gene pair (${records.length})` : "Gene pair";
+  });
+
+  hctPairList.addEventListener("change", () => {
+    if (!hctPairList.value) return;
+    const [gene1, gene2] = hctPairList.value.split("|");
+    hctGene1.value = gene1;
+    hctGene2.value = gene2;
+    queryHct116Relationship();
   });
 
   function showQueryMessage(message){
