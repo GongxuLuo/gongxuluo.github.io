@@ -186,9 +186,9 @@
     </object>
 
     <div class="gis-analysis">
-      <h3>GISL Attribution of Conditional Dependencies</h3>
+      <h3>Conditional Dependence Does Not Imply a Regulatory Relationship</h3>
       <p>
-        For genes with available perturbation data, GISL attributes the conditional dependency between each gene pair
+        For genes with available perturbation data, GISL (our method) attributes the conditional dependency between each gene pair
         to its underlying source: regulation, latent confounding, or selection. The PDF below illustrates dependencies
         attributed to selection-induced biological constraints, such as cellular survival.
       </p>
@@ -208,10 +208,17 @@
 </div>
       </object>
 
+      <p>
+        The effect of selection on a gene can be evaluated using a Z-score, which captures the change in cellular growth rate
+        before and after perturbation.
+      </p>
+
       <aside class="zpanel">
         <div class="zpanel-header">
           <div>
-            <div style="font-weight:600;">Point z-scores</div>
+            <div style="font-weight:600;">
+              Point <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8686573/" target="_blank" rel="noopener">Z-scores</a>
+            </div>
             <div class="muted" style="font-size:12px;">Scroll to view all points</div>
           </div>
           <input id="zFilter" class="zfilter" placeholder="Filter by id…" />
