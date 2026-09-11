@@ -32,16 +32,6 @@
     img{max-width:100%;border-radius:12px;border:1px solid #eee}
     code{background:#f6f6f6;padding:2px 6px;border-radius:6px}
  
-    .two-col{
-      display:grid;
-      grid-template-columns: 1.3fr 0.7fr;
-      gap:14px;
-      align-items:start;
-    }
-    @media (max-width: 900px){
-      .two-col{ grid-template-columns: 1fr; }
-    }
-
   .pdf-aspect{
     width: 100%;
     aspect-ratio: 1 / var(--ratio); /* 宽 / 高 的形式不直观，所以用变量换算 */
@@ -65,8 +55,7 @@
       border-radius:14px;
       box-shadow:0 1px 10px rgba(0,0,0,.04);
       background:#fff;
-      position:sticky;
-      top:16px;             
+      margin-top:14px;
     }
     .zpanel-header{
       padding:12px;
@@ -85,10 +74,20 @@
       font-size:13px;
     }
     .zpanel-body{
-      max-height: 620px;     
+      max-height: 360px;
       overflow-y:auto;       
       padding:8px 10px;
     }
+    .gis-analysis{
+      margin-top:28px;
+      padding-top:22px;
+      border-top:1px solid #eee;
+    }
+    .gis-analysis h3{
+      margin:0 0 8px;
+      font-size:19px;
+    }
+    .figure-label{margin:16px 0 10px}
     .zrow{
       display:flex;
       justify-content:space-between;
@@ -166,10 +165,9 @@
     <h2 class="assumption-title">2. Illustrative Example: K562 Cell Line</h2>
 
     <p>
-      We begin with a small-scale dependency graph derived from the K562 Perturb-seq dataset introduced by
-      <a href="https://doi.org/10.1016/j.cell.2016.11.038" target="_blank" rel="noopener">Dixit et al. (2016)</a>.
-      Its compact size makes the dependency structure easy to visualize.
-      Results from larger datasets are presented in the subsequent sections.
+      The PDF shows a subgraph extracted from the K562 Perturb-seq dataset of
+      <a href="https://doi.org/10.1016/j.cell.2016.11.038" target="_blank" rel="noopener">Dixit et al. (2016)</a>,
+      illustrating conditional dependencies among genes.
     </p>
 
     <p>
@@ -187,21 +185,16 @@
       <img src="assets/figures/observed_dependencies.png" alt="Observed dependency graph (preview)" />
     </object>
 
-    <p class="muted">
-      Tip: for best compatibility, include a PNG preview at
-      <code>assets/figures/observed_dependencies.png</code>.
-    </p>
-  </section>
+    <div class="gis-analysis">
+      <h3>GISL Attribution of Conditional Dependencies</h3>
+      <p>
+        For genes with available perturbation data, GISL attributes the conditional dependency between each gene pair
+        to its underlying source: regulation, latent confounding, or selection. The PDF below illustrates dependencies
+        attributed to selection-induced biological constraints, such as cellular survival.
+      </p>
 
-  <section class="card" id="sec-3-1">
-  <div class="kicker">3.1</div>
-  <h2 style="margin-top:0;">Biological constraints such as survival mechanisms are a selection process</h2>
-
-  <div class="two-col">
-    <!-- Left: PDF figure -->
-    <div>
-      <p class="muted" style="margin-top:0;">
-        Figure: selection-induced structure (PDF).
+      <p class="muted figure-label">
+        Selection-induced dependency structure (PDF).
         <a class="btn" href="assets/figures/selection_survival.pdf" target="_blank" rel="noopener">Open PDF</a>
       </p>
 
@@ -214,24 +207,22 @@
   </iframe>
 </div>
       </object>
-    </div>
 
-    <!-- Right: scrollable z-score panel -->
-    <aside class="zpanel">
-      <div class="zpanel-header">
-        <div>
-          <div style="font-weight:600;">Point z-scores</div>
-          <div class="muted" style="font-size:12px;">Scroll to view all points</div>
+      <aside class="zpanel">
+        <div class="zpanel-header">
+          <div>
+            <div style="font-weight:600;">Point z-scores</div>
+            <div class="muted" style="font-size:12px;">Scroll to view all points</div>
+          </div>
+          <input id="zFilter" class="zfilter" placeholder="Filter by id…" />
         </div>
-        <input id="zFilter" class="zfilter" placeholder="Filter by id…" />
-      </div>
 
-      <div class="zpanel-body" id="zList">
-        <!-- JS will render rows here -->
-      </div>
-    </aside>
-  </div>
-</section>
+        <div class="zpanel-body" id="zList">
+          <!-- JS will render rows here -->
+        </div>
+      </aside>
+    </div>
+  </section>
 
   <section class="card">
     <div class="kicker"> Next</div>
