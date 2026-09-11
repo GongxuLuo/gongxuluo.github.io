@@ -11,7 +11,7 @@
     .muted{color:#666}
     .paper-meta a{color:#0b57d0;text-underline-offset:3px}
     .card{border:1px solid #eee;border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 1px 10px rgba(0,0,0,.04)}
-    .kicker{font-size:13px;letter-spacing:0;text-transform:uppercase;color:#666;margin:0 0 8px 0}
+    .kicker{font-size:13px;font-weight:700;letter-spacing:0;text-transform:uppercase;color:#666;margin:0 0 8px 0}
     .row{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
     @media (max-width: 900px){ .row{grid-template-columns:1fr;} }
     .assumption-title{margin:0;font-size:22px;line-height:1.3}
@@ -122,11 +122,13 @@
   </header>
 
   <section class="card">
-    <div class="kicker">1. Assumption</div>
-    <h2 class="assumption-title">Three sources of conditional dependencies among genes</h2>
+    <div class="kicker">1. Assumptions</div>
+    <h2 class="assumption-title">Prior knowledge and causal interpretation</h2>
     <p class="assumption-intro">
-      We assume that the conditional dependencies observed among gene-expression variables can arise from three distinct mechanisms:
-      regulatory relationships, latent confounding, and selection.
+      Based on prior knowledge, we consider three mechanisms that shape gene expression: regulatory interactions between genes,
+      unobserved factors that regulate multiple genes, and constraints induced by selection. Although biologically distinct,
+      all three can manifest statistically as conditional dependencies among genes. In causal terminology, we refer to them
+      as regulation, latent confounding, and selection, respectively.
     </p>
 
     <div class="source-grid">
@@ -140,7 +142,7 @@
       </article>
 
       <article class="source-item">
-        <h3>Latent confounders</h3>
+        <h3>Latent confounder</h3>
         <p>
           Two genes may share an unobserved cause, such as a non-coding RNA or an environmental stimulus.
           This common influence can make their expression levels dependent even when neither gene directly regulates the other.
