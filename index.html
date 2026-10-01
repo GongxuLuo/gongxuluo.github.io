@@ -20,7 +20,6 @@
     .source-item{border-top:3px solid #287a68;padding-top:12px}
     .source-item h3{margin:0 0 8px;font-size:17px}
     .source-item p{margin:0;color:#444}
-    .source-graph{display:block;margin-top:10px;color:#287a68;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono";font-size:13px;font-weight:600}
     .assumption-note{margin:20px 0 0;padding-top:14px;border-top:1px solid #eee;color:#666}
     @media (max-width: 760px){
       h1{font-size:24px}
@@ -204,6 +203,64 @@
       .relation-row{grid-template-columns:1fr;gap:3px}
     }
 
+    /* ---- section 1: animated mechanism figures ---- */
+    .source-item p,.assumption-intro,.assumption-note{text-wrap:pretty}
+    .source-item.mech-lat{border-top-color:#a66d14} .source-item.mech-sel{border-top-color:#8b4f81}
+    .mech-fig{margin:4px 0 14px;padding:6px 4px 2px;background:#fcfcfb;border:1px solid #eee;border-radius:12px}
+    .mech-fig svg{display:block;width:100%;height:auto;overflow:visible}
+    .mech-fig text{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    .source-item p.mech-example{margin-top:10px;font-size:14px;color:#555}
+    .mech-example strong{color:#333}
+    .m-name{font-size:20px;font-weight:700;text-anchor:middle;fill:#222}
+    .m-small{font-size:15px}
+    .m-insub{font-size:9.5px;text-anchor:middle;fill:#7a5a1e}
+    .m-sub{font-size:10.5px;text-anchor:middle;fill:#666}
+    .m-legend{font-size:10px;fill:#999}
+    .m-axis{font-size:10px;fill:#888}
+    .m-cap{font-size:11.5px;font-weight:600;text-anchor:middle;fill:#333}
+    .m-kdtxt{font-size:8.5px;font-weight:700;fill:#fff;text-anchor:middle}
+    .m-level{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(.85)}
+    .m-dot{opacity:0}
+    .m-kd,.cap-b,.lat-link{opacity:0}
+    .m-cell{fill:#8b4f81;opacity:.9}
+    .sel-dead{fill:#c4c4c4;opacity:.25}
+    .sel-zone{opacity:.9} .sel-zonetxt{fill:#c0392b;font-weight:600;text-anchor:start}
+    .sel-line{stroke-dashoffset:0}
+    .sel-c3{opacity:1} .sel-c1{opacity:0}
+    @media (prefers-reduced-motion:no-preference){
+      .mech-fig *{animation-duration:9s;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+      .reg-x{animation-name:regX} .reg-y{animation-name:regY}
+      .reg-p1{animation-name:regP1} .reg-p2{animation-name:regP2} .reg-p3{animation-name:regP3}
+      .reg-kd,.lat-kd{animation-name:kdOn}
+      .reg-ca,.lat-ca{animation-name:capA} .reg-cb,.lat-cb{animation-name:capB}
+      .lat-l{animation-name:latL} .lat-x{animation-name:latX} .lat-y{animation-name:latY}
+      .lat-px{animation-name:latPX} .lat-py{animation-name:latPY} .lat-link{animation-name:latLink}
+      .sel-dead{animation-name:selDead} .sel-zone{animation-name:selZone} .sel-line{animation-name:selLine}
+      .sel-s{animation-name:selS}
+      .sel-c1{animation-name:sel1} .sel-c2{animation-name:sel2} .sel-c3{animation-name:sel3}
+    }
+    @keyframes regX{0%,10%{transform:scaleY(.15)}22%,55%{transform:scaleY(.85)}62%,92%{transform:scaleY(.08)}100%{transform:scaleY(.15)}}
+    @keyframes regY{0%,32%{transform:scaleY(.15)}45%,62%{transform:scaleY(.85)}74%,92%{transform:scaleY(.1)}100%{transform:scaleY(.15)}}
+    @keyframes regP1{0%,20%{transform:translate(0,0);opacity:0}22%{opacity:1}35%{transform:translate(80px,0);opacity:1}37%,100%{transform:translate(80px,0);opacity:0}}
+    @keyframes regP2{0%,25%{transform:translate(0,0);opacity:0}27%{opacity:1}40%{transform:translate(80px,0);opacity:1}42%,100%{transform:translate(80px,0);opacity:0}}
+    @keyframes regP3{0%,30%{transform:translate(0,0);opacity:0}32%{opacity:1}45%{transform:translate(80px,0);opacity:1}47%,100%{transform:translate(80px,0);opacity:0}}
+    @keyframes kdOn{0%,56%{opacity:0}60%,90%{opacity:1}94%,100%{opacity:0}}
+    @keyframes capA{0%,54%{opacity:1}57%,96%{opacity:0}100%{opacity:1}}
+    @keyframes capB{0%,55%{opacity:0}58%,94%{opacity:1}97%,100%{opacity:0}}
+    @keyframes latL{0%,6%{transform:scaleY(.15)}18%,86%{transform:scaleY(.85)}96%,100%{transform:scaleY(.15)}}
+    @keyframes latX{0%,26%{transform:scaleY(.15)}38%,55%{transform:scaleY(.85)}62%,90%{transform:scaleY(.08)}100%{transform:scaleY(.15)}}
+    @keyframes latY{0%,26%{transform:scaleY(.15)}38%,86%{transform:scaleY(.85)}96%,100%{transform:scaleY(.15)}}
+    @keyframes latPX{0%,16%{transform:translate(0,0);opacity:0}18%{opacity:1}32%{transform:translate(-52px,38px);opacity:1}34%,100%{transform:translate(-52px,38px);opacity:0}}
+    @keyframes latPY{0%,16%{transform:translate(0,0);opacity:0}18%{opacity:1}32%{transform:translate(52px,38px);opacity:1}34%,100%{transform:translate(52px,38px);opacity:0}}
+    @keyframes latLink{0%,37%{opacity:0}41%,54%{opacity:1}57%,100%{opacity:0}}
+    @keyframes selDead{0%,28%{fill:#8b4f81;opacity:.9}40%,92%{fill:#c4c4c4;opacity:.25}98%,100%{fill:#8b4f81;opacity:.9}}
+    @keyframes selZone{0%,28%{opacity:0}36%,92%{opacity:.9}97%,100%{opacity:0}}
+    @keyframes selLine{0%,54%{stroke-dashoffset:230;opacity:0}55%{stroke-dashoffset:230;opacity:1}68%,92%{stroke-dashoffset:0;opacity:1}96%{stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:230;opacity:0}}
+    @keyframes selS{0%,28%{fill:#fff}36%,92%{fill:#ead6e6}100%{fill:#fff}}
+    @keyframes sel1{0%,30%{opacity:1}33%,96%{opacity:0}100%{opacity:1}}
+    @keyframes sel2{0%,31%{opacity:0}34%,54%{opacity:1}57%,100%{opacity:0}}
+    @keyframes sel3{0%,55%{opacity:0}58%,94%{opacity:1}97%,100%{opacity:0}}
+
   </style>
 </head>
 <body>
@@ -218,41 +275,142 @@
   <section class="card">
     <h2 class="assumption-title">1. Assumptions: Gene expression is shaped by three classes of influence: regulation by TFs, latent factors, and selection-induced constraints (e.g., cellular viability)</h2>
     <p class="assumption-intro">
-      Under these assumptions, the conditional dependencies observed among genes may arise from three distinct causal mechanisms:
-      regulation, latent confounding, and selection.
+      Under these assumptions, the conditional dependencies observed among genes may arise from three distinct causal mechanisms: regulation, latent confounding,&nbsp;and&nbsp;selection.
     </p>
 
     <div class="source-grid">
       <article class="source-item">
         <h3>Regulation</h3>
+        <figure class="mech-fig">
+    <svg viewBox="0 0 320 226" role="img" aria-labelledby="regTitle regDesc">
+      <title id="regTitle">Regulation: X causes Y</title>
+      <desc id="regDesc">Transcription factor X rises and its protein travels to gene Y, which then rises. When X is knocked down, Y falls as well.</desc>
+      <defs><marker id="regArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#287a68"/></marker></defs>
+      <text class="m-legend" x="12" y="20">fill = expression level</text>
+      <line x1="116" y1="87" x2="202" y2="87" stroke="#287a68" stroke-width="2.5" marker-end="url(#regArrow)"/>
+      
+      <clipPath id="regClipX"><rect x="28" y="62" width="84" height="50" rx="12"/></clipPath>
+      <rect x="28" y="62" width="84" height="50" rx="12" fill="#fff"/>
+      <g clip-path="url(#regClipX)"><rect class="m-level reg-x" x="28" y="62" width="84" height="50" fill="#cfe7df"/></g>
+      <rect x="28" y="62" width="84" height="50" rx="12" fill="none" stroke="#287a68" stroke-width="2"/>
+      <text class="m-name" x="70.0" y="93.0">X</text>
+      
+      <clipPath id="regClipY"><rect x="208" y="62" width="84" height="50" rx="12"/></clipPath>
+      <rect x="208" y="62" width="84" height="50" rx="12" fill="#fff"/>
+      <g clip-path="url(#regClipY)"><rect class="m-level reg-y" x="208" y="62" width="84" height="50" fill="#cfe7df"/></g>
+      <rect x="208" y="62" width="84" height="50" rx="12" fill="none" stroke="#287a68" stroke-width="2"/>
+      <text class="m-name" x="250.0" y="93.0">Y</text>
+      <circle class="m-dot reg-p1" cx="120" cy="87" r="4.5" fill="#287a68"/>
+      <circle class="m-dot reg-p2" cx="120" cy="87" r="4.5" fill="#287a68"/>
+      <circle class="m-dot reg-p3" cx="120" cy="87" r="4.5" fill="#287a68"/>
+      <text class="m-sub" x="70" y="130">transcription factor</text>
+      <text class="m-sub" x="250" y="130">target gene</text>
+      
+      <g class="m-kd reg-kd">
+        <circle cx="110" cy="63" r="11" fill="#c0392b"/>
+        <text x="110" y="66.5" class="m-kdtxt">KD</text>
+      </g>
+      <text class="m-cap cap-a reg-ca" x="160" y="200">Step 1 · X rises and switches Y on</text>
+      <text class="m-cap cap-b reg-cb" x="160" y="200">Step 2 · Knock down X → Y falls too</text>
+    </svg>
+        </figure>
         <p>
-          TFs can directly modulate the expression of their target genes.
-          These directed regulatory relationships generate dependencies between regulators and their targets.
+          TFs can directly modulate the expression of their target genes. These directed regulatory relationships generate dependencies between regulators and&nbsp;their&nbsp;targets.
         </p>
-        <span class="source-graph">X → Y</span>
+        <p class="mech-example"><strong>Biological example:</strong> the transcription factor p53 binds the promoter of <em>CDKN1A</em> (p21) and turns it on; knocking p53 down&nbsp;lowers&nbsp;p21.</p>
       </article>
 
-      <article class="source-item">
+      <article class="source-item mech-lat">
         <h3>Latent confounding</h3>
+        <figure class="mech-fig">
+    <svg viewBox="0 0 320 226" role="img" aria-labelledby="latTitle latDesc">
+      <title id="latTitle">Latent confounding: hidden L drives X and Y</title>
+      <desc id="latDesc">An unmeasured factor L rises and pushes both X and Y up together, so they look linked. When X is knocked down, Y does not change.</desc>
+      <defs><marker id="latArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a66d14"/></marker></defs>
+      <text class="m-legend" x="12" y="20">fill = expression level</text>
+      <line x1="140" y1="56" x2="86" y2="97" stroke="#a66d14" stroke-width="2.2" stroke-dasharray="5 4" marker-end="url(#latArrow)"/>
+      <line x1="180" y1="56" x2="234" y2="97" stroke="#a66d14" stroke-width="2.2" stroke-dasharray="5 4" marker-end="url(#latArrow)"/>
+      
+      <clipPath id="latClipL"><rect x="118" y="12" width="84" height="44" rx="12"/></clipPath>
+      <rect x="118" y="12" width="84" height="44" rx="12" fill="#fff"/>
+      <g clip-path="url(#latClipL)"><rect class="m-level lat-l" x="118" y="12" width="84" height="44" fill="#f1ddb9"/></g>
+      <rect x="118" y="12" width="84" height="44" rx="12" fill="none" stroke="#a66d14" stroke-width="2" stroke-dasharray="6 4"/>
+      <text class="m-name" x="160.0" y="35.0">L</text><text class="m-insub" x="160.0" y="48">unmeasured</text>
+      
+      <clipPath id="latClipX"><rect x="28" y="100" width="84" height="48" rx="12"/></clipPath>
+      <rect x="28" y="100" width="84" height="48" rx="12" fill="#fff"/>
+      <g clip-path="url(#latClipX)"><rect class="m-level lat-x" x="28" y="100" width="84" height="48" fill="#f1ddb9"/></g>
+      <rect x="28" y="100" width="84" height="48" rx="12" fill="none" stroke="#a66d14" stroke-width="2"/>
+      <text class="m-name" x="70.0" y="130.0">X</text>
+      
+      <clipPath id="latClipY"><rect x="208" y="100" width="84" height="48" rx="12"/></clipPath>
+      <rect x="208" y="100" width="84" height="48" rx="12" fill="#fff"/>
+      <g clip-path="url(#latClipY)"><rect class="m-level lat-y" x="208" y="100" width="84" height="48" fill="#f1ddb9"/></g>
+      <rect x="208" y="100" width="84" height="48" rx="12" fill="none" stroke="#a66d14" stroke-width="2"/>
+      <text class="m-name" x="250.0" y="130.0">Y</text>
+      <g class="lat-link">
+        <line x1="116" y1="124" x2="204" y2="124" stroke="#888" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round"/>
+        <text class="m-sub" x="160" y="116">look linked</text>
+        <text class="m-sub" x="160" y="140">but no arrow</text>
+      </g>
+      <circle class="m-dot lat-px" cx="140" cy="58" r="4.5" fill="#a66d14"/>
+      <circle class="m-dot lat-py" cx="180" cy="58" r="4.5" fill="#a66d14"/>
+      <text class="m-sub" x="70" y="166">gene X</text>
+      <text class="m-sub" x="250" y="166">gene Y</text>
+      
+      <g class="m-kd lat-kd">
+        <circle cx="110" cy="101" r="11" fill="#c0392b"/>
+        <text x="110" y="104.5" class="m-kdtxt">KD</text>
+      </g>
+      <text class="m-cap cap-a lat-ca" x="160" y="200">Step 1 · Hidden L pushes X and Y up together</text>
+      <text class="m-cap cap-b lat-cb" x="160" y="200">Step 2 · Knock down X → Y stays the same</text>
+    </svg>
+        </figure>
         <p>
-          Unobserved regulatory factors, such as non-coding RNAs, epigenetic states, or environmental signals, may jointly influence multiple genes.
-          Their shared effects can induce dependencies even when no direct regulatory relationship exists between the genes.
+          Unobserved regulatory factors, such as non-coding RNAs, epigenetic states, or environmental signals, may jointly influence multiple genes. Their shared effects can induce dependencies even when no direct regulatory relationship exists between&nbsp;the&nbsp;genes.
         </p>
-        <span class="source-graph">X ← L → Y</span>
+        <p class="mech-example"><strong>Biological example:</strong> an unmeasured chromatin state or microRNA can raise or lower many genes at once, so X and Y move together even though neither regulates&nbsp;the&nbsp;other.</p>
       </article>
 
-      <article class="source-item">
+      <article class="source-item mech-sel">
         <h3>Selection</h3>
+        <figure class="mech-fig">
+    <svg viewBox="0 0 320 226" role="img" aria-labelledby="selTitle selDesc">
+      <title id="selTitle">Selection: only surviving cells are observed</title>
+      <desc id="selDesc">Each dot is a cell. At first X and Y are unrelated. Cells with both X and Y low die, and among the surviving cells X and Y look negatively related.</desc>
+      <defs><marker id="selArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8b4f81"/></marker></defs>
+      <rect x="40" y="6" width="54" height="28" rx="10" fill="#fff" stroke="#8b4f81" stroke-width="2"/>
+      <text class="m-name m-small" x="67" y="25">X</text>
+      <rect class="sel-s" x="133" y="6" width="54" height="28" rx="10" fill="#fff" stroke="#8b4f81" stroke-width="2"/>
+      <text class="m-name m-small" x="160" y="25">S</text>
+      <rect x="226" y="6" width="54" height="28" rx="10" fill="#fff" stroke="#8b4f81" stroke-width="2"/>
+      <text class="m-name m-small" x="253" y="25">Y</text>
+      <line x1="96" y1="20" x2="129" y2="20" stroke="#8b4f81" stroke-width="2" marker-end="url(#selArrow)"/>
+      <line x1="224" y1="20" x2="191" y2="20" stroke="#8b4f81" stroke-width="2" marker-end="url(#selArrow)"/>
+      <text class="m-sub" x="160" y="48">S = cell survives (only survivors are sequenced)</text>
+      <polygon class="sel-zone" points="52.0,176.0 287.6,176.0 52.0,69.6" fill="#f6dede"/>
+      <text class="m-sub sel-zone sel-zonetxt" x="59.4" y="169.3">die</text>
+      <line x1="46" y1="182" x2="304" y2="182" stroke="#bbb" stroke-width="1.2"/>
+      <line x1="46" y1="182" x2="46" y2="58" stroke="#bbb" stroke-width="1.2"/>
+      <text class="m-axis" x="304" y="193" text-anchor="end">X expression →</text>
+      <text class="m-axis" x="40" y="62" text-anchor="end">Y</text>
+      <text class="m-axis" x="40" y="73" text-anchor="end">↑</text>
+      <circle class="m-cell sel-dead" cx="63.7" cy="171.2" r="4.2"/><circle class="m-cell sel-dead" cx="70.8" cy="153.6" r="4.2"/><circle class="m-cell sel-dead" cx="68.3" cy="131.1" r="4.2"/><circle class="m-cell sel-dead" cx="57.9" cy="110.6" r="4.2"/><circle class="m-cell sel-dead" cx="57.5" cy="92.9" r="4.2"/><circle class="m-cell sel-dead" cx="58.2" cy="78.7" r="4.2"/><circle class="m-cell sel-dead" cx="96.9" cy="162.4" r="4.2"/><circle class="m-cell sel-dead" cx="90.3" cy="151.6" r="4.2"/><circle class="m-cell sel-dead" cx="101.3" cy="123.5" r="4.2"/><circle class="m-cell sel-dead" cx="100.2" cy="112.0" r="4.2"/><circle class="m-cell sel-dead" cx="108.8" cy="97.9" r="4.2"/><circle class="m-cell sel-alive" cx="106.3" cy="76.1" r="4.2"/><circle class="m-cell sel-dead" cx="121.8" cy="171.7" r="4.2"/><circle class="m-cell sel-dead" cx="125.3" cy="143.9" r="4.2"/><circle class="m-cell sel-dead" cx="122.6" cy="128.3" r="4.2"/><circle class="m-cell sel-dead" cx="132.5" cy="112.3" r="4.2"/><circle class="m-cell sel-alive" cx="130.5" cy="97.7" r="4.2"/><circle class="m-cell sel-alive" cx="119.9" cy="77.2" r="4.2"/><circle class="m-cell sel-dead" cx="164.4" cy="167.6" r="4.2"/><circle class="m-cell sel-dead" cx="156.5" cy="146.9" r="4.2"/><circle class="m-cell sel-dead" cx="159.5" cy="131.9" r="4.2"/><circle class="m-cell sel-alive" cx="166.9" cy="108.1" r="4.2"/><circle class="m-cell sel-alive" cx="154.9" cy="91.0" r="4.2"/><circle class="m-cell sel-alive" cx="161.0" cy="68.4" r="4.2"/><circle class="m-cell sel-dead" cx="196.5" cy="169.4" r="4.2"/><circle class="m-cell sel-dead" cx="201.9" cy="153.0" r="4.2"/><circle class="m-cell sel-alive" cx="189.7" cy="126.0" r="4.2"/><circle class="m-cell sel-alive" cx="183.9" cy="110.8" r="4.2"/><circle class="m-cell sel-alive" cx="181.5" cy="89.8" r="4.2"/><circle class="m-cell sel-alive" cx="197.2" cy="72.4" r="4.2"/><circle class="m-cell sel-dead" cx="230.6" cy="169.1" r="4.2"/><circle class="m-cell sel-alive" cx="226.7" cy="146.8" r="4.2"/><circle class="m-cell sel-alive" cx="224.2" cy="129.9" r="4.2"/><circle class="m-cell sel-alive" cx="229.9" cy="104.9" r="4.2"/><circle class="m-cell sel-alive" cx="221.9" cy="89.9" r="4.2"/><circle class="m-cell sel-alive" cx="213.0" cy="70.7" r="4.2"/><circle class="m-cell sel-alive" cx="256.7" cy="160.2" r="4.2"/><circle class="m-cell sel-alive" cx="260.5" cy="150.8" r="4.2"/><circle class="m-cell sel-alive" cx="251.0" cy="127.1" r="4.2"/><circle class="m-cell sel-alive" cx="243.1" cy="111.2" r="4.2"/><circle class="m-cell sel-alive" cx="246.3" cy="97.0" r="4.2"/><circle class="m-cell sel-alive" cx="243.9" cy="69.8" r="4.2"/><circle class="m-cell sel-alive" cx="276.5" cy="170.0" r="4.2"/><circle class="m-cell sel-alive" cx="282.1" cy="143.1" r="4.2"/><circle class="m-cell sel-alive" cx="275.4" cy="130.0" r="4.2"/><circle class="m-cell sel-alive" cx="285.6" cy="105.7" r="4.2"/><circle class="m-cell sel-alive" cx="291.4" cy="87.2" r="4.2"/><circle class="m-cell sel-alive" cx="279.7" cy="74.4" r="4.2"/>
+      <line class="sel-line" x1="71.8" y1="69.9" x2="295.0" y2="126.2" stroke="#8b4f81" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray:230;"/>
+      <text class="m-cap cap-a sel-c1" x="160" y="214">Step 1 · In all cells, X and Y are unrelated</text>
+      <text class="m-cap cap-b sel-c2" x="160" y="214">Step 2 · Cells with both X and Y low die</text>
+      <text class="m-cap cap-b sel-c3" x="160" y="214">Step 3 · Among survivors, X and Y look linked</text>
+    </svg>
+        </figure>
         <p>
-          Evolutionary and cellular selection constrains which gene-expression profiles are viable.
-          Conditioning on survival, sampling, or inclusion can induce dependencies between genes that would otherwise be independent.
+          Evolutionary and cellular selection constrains which gene-expression profiles are viable. Conditioning on survival, sampling, or inclusion can induce dependencies between genes that would otherwise&nbsp;be&nbsp;independent.
         </p>
-        <span class="source-graph">X → S ← Y &nbsp; (observe S = 1)</span>
+        <p class="mech-example"><strong>Biological example:</strong> two redundant genes (e.g., paralogs): a cell survives if at least one is active. Sequencing only surviving cells makes the two genes&nbsp;look&nbsp;linked.</p>
       </article>
     </div>
 
     <p class="assumption-note">
-      These mechanisms are not mutually exclusive: regulation, latent confounding, and selection may coexist for the same gene pair.
+      These mechanisms are not mutually exclusive: regulation, latent confounding, and selection may coexist for the same&nbsp;gene&nbsp;pair.
     </p>
   </section>
 
