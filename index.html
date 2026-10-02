@@ -5,12 +5,29 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Gene Regulatory Network Inference in the Presence of Selection Bias and Latent Confounders</title>
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;max-width:1050px;margin:28px auto;padding:0 16px;line-height:1.55}
-    header{border-bottom:1px solid #eee;padding:10px 0 18px;margin-bottom:18px;text-align:center}
-    h1{max-width:900px;margin:0 auto 8px;font-size:28px;line-height:1.25}
+    html{scroll-behavior:smooth}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;margin:0;line-height:1.6;color:#1f2328;background:#f5f6f6}
+    .wrap{max-width:1240px;margin:0 auto;padding:4px 32px 64px}
+    /* sticky top navigation */
+    .topnav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid #e6e8e8}
+    .topnav-inner{max-width:1240px;margin:0 auto;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{font-weight:800;font-size:18px;letter-spacing:.02em;color:#1f2328;text-decoration:none}
+    .brand span{color:#287a68}
+    .navlinks{display:flex;gap:4px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+    .navlinks a{color:#444;text-decoration:none;font-size:14px;font-weight:500;padding:7px 12px;border-radius:8px}
+    .navlinks a:hover{background:#f0f2f2;color:#111}
+    .navlinks a.nav-paper{color:#0b57d0}
+    /* hero header */
+    .hero{background:linear-gradient(180deg,#eef5f2 0%,#f5f6f6 100%);border-bottom:1px solid #e6e8e8;text-align:center}
+    .hero-inner{max-width:1240px;margin:0 auto;padding:56px 32px 48px}
+    .venue-chip{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#287a68;background:#fff;border:1px solid #cfe7df;border-radius:999px;padding:4px 14px}
+    h1{max-width:980px;margin:18px auto 24px;font-size:40px;line-height:1.18;letter-spacing:-.01em}
+    .hero-btn{display:inline-block;background:#1f2328;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:10px 20px;border-radius:999px}
+    .hero-btn:hover{background:#000}
     .muted{color:#666}
-    .paper-meta a{color:#0b57d0;text-underline-offset:3px}
-    .card{border:1px solid #eee;border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 1px 10px rgba(0,0,0,.04)}
+    .card{background:#fff;border:1px solid #e6e8e8;border-radius:16px;padding:30px 34px;margin:28px 0;box-shadow:0 1px 3px rgba(0,0,0,.04),0 10px 30px rgba(0,0,0,.035);scroll-margin-top:76px}
+    .card > p:not(.assumption-note):not(.assumption-intro),.gis-analysis > p{max-width:82ch}
+    h1,.assumption-title{text-wrap:balance}
     .kicker{font-size:13px;font-weight:700;letter-spacing:0;text-transform:uppercase;color:#666;margin:0 0 8px 0}
     .row{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
     @media (max-width: 900px){ .row{grid-template-columns:1fr;} }
@@ -22,9 +39,15 @@
     .source-item p{margin:0;color:#444}
     .assumption-note{margin:20px 0 0;padding-top:14px;border-top:1px solid #eee;color:#666}
     @media (max-width: 760px){
-      h1{font-size:24px}
+      h1{font-size:27px}
+      .wrap{padding:0 16px 40px}
+      .topnav-inner{padding:0 16px}
+      .navlinks a.nav-sec{display:none}
+      .hero-inner{padding:36px 16px 32px}
+      .card{padding:20px 18px;margin:18px 0}
       .source-grid{grid-template-columns:1fr;gap:18px}
     }
+    @media (max-width: 900px){ .source-grid{grid-template-columns:1fr} .mech-fig{max-width:440px} }
     .btn{display:inline-block;border:1px solid #ddd;border-radius:10px;padding:8px 10px;text-decoration:none;color:#0b57d0;background:#fafafa}
     .btn:hover{background:#f3f3f3}
     .pdfbox{width:100%;height:620px;border:1px solid #eee;border-radius:12px;overflow:hidden}
@@ -264,15 +287,31 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>Gene Regulatory Network Inference in the Presence of Selection Bias and Latent Confounders</h1>
-    <div class="muted paper-meta">
-      NeurIPS 2025 ·
-      <a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/1b3035f142d6abc301fb0476151314b5-Abstract-Conference.html" target="_blank" rel="noopener">View paper</a>
+  <nav class="topnav" aria-label="Page sections">
+    <div class="topnav-inner">
+      <a class="brand" href="#top">GIS<span>L</span></a>
+      <div class="navlinks">
+        <a class="nav-sec" href="#assumptions">Assumptions</a>
+        <a class="nav-sec" href="#k562">K562 example</a>
+        <a class="nav-sec" href="#cell-lines">Other cell lines</a>
+        <a class="nav-paper" href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/1b3035f142d6abc301fb0476151314b5-Abstract-Conference.html" target="_blank" rel="noopener">Paper ↗</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <span class="venue-chip">NeurIPS 2025</span>
+      <h1>Gene Regulatory Network Inference in the Presence of Selection Bias and Latent Confounders</h1>
+      <div class="paper-meta">
+        <a class="hero-btn" href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/1b3035f142d6abc301fb0476151314b5-Abstract-Conference.html" target="_blank" rel="noopener">View paper</a>
+      </div>
     </div>
   </header>
 
-  <section class="card">
+  <main class="wrap">
+
+  <section class="card" id="assumptions">
     <h2 class="assumption-title">1. Assumptions: Gene expression is shaped by three classes of influence: regulation by TFs, latent factors, and selection-induced constraints (e.g., cellular viability)</h2>
     <p class="assumption-intro">
       Under these assumptions, the conditional dependencies observed among genes may arise from three distinct causal mechanisms: regulation, latent confounding,&nbsp;and&nbsp;selection.
@@ -414,7 +453,7 @@
     </p>
   </section>
 
-  <section class="card">
+  <section class="card" id="k562">
     <h2 class="assumption-title">2. Illustrative Example: K562 Cell Line</h2>
 
     <p>
@@ -485,7 +524,7 @@
     </div>
   </section>
 
-  <section class="card">
+  <section class="card" id="cell-lines">
     <h2 class="other-lines-title">Other Cell Lines</h2>
     <label class="cell-line-label" for="cellLine">Cell line</label>
     <select id="cellLine" class="cell-line-select">
@@ -575,6 +614,7 @@
       </div>
     </div>
   </section>
+  </main>
 <script>
   // ACH-000551 values for genes pointing to selection variables in Figure 5.
   const zscores = [
