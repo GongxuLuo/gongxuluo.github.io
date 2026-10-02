@@ -284,6 +284,30 @@
     @keyframes sel2{0%,31%{opacity:0}34%,54%{opacity:1}57%,100%{opacity:0}}
     @keyframes sel3{0%,55%{opacity:0}58%,94%{opacity:1}97%,100%{opacity:0}}
 
+    /* ---- upload your results ---- */
+    .upload-intro{max-width:82ch;margin:8px 0 0;color:#444;text-wrap:pretty}
+    .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:24px;counter-reset:step}
+    .step{min-width:0;border:1px solid #e6e8e8;border-radius:14px;padding:20px 20px 18px;background:#fcfcfb;display:flex;flex-direction:column}
+    .step h3{margin:0 0 8px;font-size:17px;display:flex;align-items:center;gap:10px}
+    .step h3::before{counter-increment:step;content:counter(step);display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#287a68;color:#fff;font-size:14px;flex:none}
+    .step:nth-child(2) h3::before{background:#a66d14}
+    .step:nth-child(3) h3::before{background:#8b4f81}
+    .step p,.step li{color:#444;font-size:15px;text-wrap:pretty}
+    .step p{margin:0 0 10px}
+    .step ul{margin:0 0 12px;padding-left:18px}
+    .step li{margin:3px 0}
+    .step .step-actions{margin-top:auto;display:flex;flex-wrap:wrap;gap:8px;padding-top:6px}
+    .cmd{position:relative;margin:0 0 10px;background:#1f2328;color:#e6edf3;border-radius:10px;padding:10px 70px 10px 12px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono";white-space:pre-wrap;overflow-wrap:anywhere}
+    .cmd .cmt{color:#8b949e}
+    .copy-btn{position:absolute;top:6px;right:6px;border:1px solid #3d444d;background:#2d333b;color:#c9d1d9;border-radius:6px;font:600 11px/1 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;padding:6px 8px;cursor:pointer}
+    .copy-btn:hover{background:#373e47}
+    .primary-btn{display:inline-block;border:1px solid #0b57d0;border-radius:10px;padding:9px 14px;background:#0b57d0;color:#fff;text-decoration:none;font-weight:600;font-size:14px}
+    .primary-btn:hover{background:#0949af}
+    #upload > p.upload-note{margin:20px 0 0;padding-top:14px;border-top:1px solid #eee;color:#666;font-size:14px;max-width:none}
+    .hero-btn.secondary{background:#fff;color:#1f2328;border:1px solid #d0d7de;margin-left:8px}
+    .hero-btn.secondary:hover{background:#f3f4f6}
+    @media (max-width: 900px){ .steps{grid-template-columns:minmax(0,1fr)} }
+
   </style>
 </head>
 <body>
@@ -294,6 +318,7 @@
         <a class="nav-sec" href="#assumptions">Assumptions</a>
         <a class="nav-sec" href="#k562">K562 example</a>
         <a class="nav-sec" href="#cell-lines">Other cell lines</a>
+        <a class="nav-sec" href="#upload">Upload results</a>
         <a class="nav-paper" href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/1b3035f142d6abc301fb0476151314b5-Abstract-Conference.html" target="_blank" rel="noopener">Paper ↗</a>
       </div>
     </div>
@@ -305,6 +330,7 @@
       <h1>Gene Regulatory Network Inference in the Presence of Selection Bias and Latent Confounders</h1>
       <div class="paper-meta">
         <a class="hero-btn" href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/1b3035f142d6abc301fb0476151314b5-Abstract-Conference.html" target="_blank" rel="noopener">View paper</a>
+        <a class="hero-btn secondary" href="https://github.com/GongxuLuo/Gene-Regulatory-Network-Inference-in-the-Presence-of-Selection-Bias-and-Latent-Confounders" target="_blank" rel="noopener">Code</a>
       </div>
     </div>
   </header>
@@ -614,6 +640,54 @@
       </div>
     </div>
   </section>
+
+  <section class="card" id="upload">
+    <h2 class="other-lines-title">Upload Your Results</h2>
+    <p class="upload-intro">
+      Run GISL on your own perturbation data and share what it finds. Download the code, run it on your dataset, and upload the output so we can compare results across&nbsp;cell&nbsp;lines.
+    </p>
+
+    <div class="steps">
+      <article class="step">
+        <h3>Get the code</h3>
+        <p>Clone the repository or download it as a ZIP file. Setup details are in the&nbsp;repository&nbsp;README.</p>
+        <div class="cmd"><span class="copy-src">git clone https://github.com/GongxuLuo/Gene-Regulatory-Network-Inference-in-the-Presence-of-Selection-Bias-and-Latent-Confounders.git</span><button class="copy-btn" type="button">Copy</button></div>
+        <div class="step-actions">
+          <a class="primary-btn" href="https://github.com/GongxuLuo/Gene-Regulatory-Network-Inference-in-the-Presence-of-Selection-Bias-and-Latent-Confounders" target="_blank" rel="noopener">View code on GitHub</a>
+          <a class="btn" href="https://github.com/GongxuLuo/Gene-Regulatory-Network-Inference-in-the-Presence-of-Selection-Bias-and-Latent-Confounders/archive/refs/heads/main.zip">Download ZIP</a>
+        </div>
+      </article>
+
+      <article class="step">
+        <h3>Run on your data</h3>
+        <ul>
+          <li>Prepare gene expression data as an&nbsp;<code>.h5ad</code>&nbsp;file.</li>
+          <li>Collect observational and interventional data into a dict, each of shape&nbsp;<code>(n_samples,&nbsp;n_vars)</code>.</li>
+          <li>All datasets must measure the same genes; sample sizes&nbsp;can&nbsp;differ.</li>
+          <li>Interventions can be soft or hard, on&nbsp;single&nbsp;genes.</li>
+          <li>Point the scripts to your files: run_continuous.py reads <code>norman.csv</code> and GISL.py&nbsp;reads&nbsp;<code>perturb_processed.h5ad</code>.</li>
+        </ul>
+        <div class="cmd"><span class="cmt"># 1. skeleton via FGES</span>
+<span class="copy-src">python py-tetrad-main/pytetrad/run_continuous.py</span><button class="copy-btn" type="button">Copy</button></div>
+        <div class="cmd"><span class="cmt"># 2. orient edges, detect latent and selection</span>
+<span class="copy-src">python GISL.py</span><button class="copy-btn" type="button">Copy</button></div>
+      </article>
+
+      <article class="step">
+        <h3>Upload your results</h3>
+        <p>GISL.py saves .npy files to the <code>GISL_dixit_new/</code> folder (create it before running): the inferred graph, the latent-confounder and selection pairs, and the&nbsp;gene&nbsp;names.</p>
+        <p>Zip that folder and submit it through a short form on GitHub. Describe your dataset in the form, then drag the zip file&nbsp;into&nbsp;it.</p>
+        <div class="step-actions">
+          <a class="primary-btn" href="https://github.com/GongxuLuo/Gene-Regulatory-Network-Inference-in-the-Presence-of-Selection-Bias-and-Latent-Confounders/issues/new?title=%5BResults%5D%20%3Ccell%20line%20or%20dataset%20name%3E&body=%23%23%23%20Dataset%0A-%20Cell%20line%20/%20system%3A%0A-%20Data%20source%20%28link%20or%20DOI%29%3A%0A-%20Number%20of%20genes%3A%0A-%20Number%20of%20cells%3A%0A-%20Number%20of%20perturbed%20genes%3A%0A%0A%23%23%23%20GISL%20settings%0A-%20Threshold%3A%0A-%20Anything%20you%20changed%20in%20the%20code%3A%0A%0A%23%23%23%20Results%0ADrag%20and%20drop%20your%20zipped%20output%20folder%20%28the%20.npy%20files%20saved%20by%20GISL.py%29%20into%20this%20box.%0AIf%20the%20zip%20is%20larger%20than%2025%20MB%2C%20paste%20a%20download%20link%20instead%20%28e.g.%2C%20Zenodo%20or%20Google%20Drive%29.%0A%0A%23%23%23%20Notes%0A" target="_blank" rel="noopener">Upload results</a>
+          <a class="btn" href="https://github.com/GongxuLuo/Gene-Regulatory-Network-Inference-in-the-Presence-of-Selection-Bias-and-Latent-Confounders/issues" target="_blank" rel="noopener">See submissions</a>
+        </div>
+      </article>
+    </div>
+
+    <p class="upload-note">
+      Uploading requires a free GitHub account. Files up to 25 MB can be attached directly; for larger results, include a download link in&nbsp;the&nbsp;form.
+    </p>
+  </section>
   </main>
 <script>
   // ACH-000551 values for genes pointing to selection variables in Figure 5.
@@ -823,6 +897,16 @@
   for (const input of [hctGene1, hctGene2]){
     input.addEventListener("keydown", (event) => {
       if (event.key === "Enter") queryHct116Relationship();
+    });
+  }
+
+  // copy buttons in the Upload Your Results section
+  for (const btn of document.querySelectorAll(".copy-btn")){
+    btn.addEventListener("click", async () => {
+      const text = btn.parentElement.querySelector(".copy-src").textContent;
+      try { await navigator.clipboard.writeText(text); btn.textContent = "Copied"; }
+      catch (e) { btn.textContent = "Select & copy"; }
+      setTimeout(() => { btn.textContent = "Copy"; }, 1500);
     });
   }
 </script>
