@@ -934,7 +934,7 @@
     // Without selection, a causal direction is identifiable even when latent confounding is present;
     // a latent-only pair leaves the causal relation undetermined.
     let causalText = relation.causal ? relation.causal.replace(" -> ", " → ") : "Not identified";
-    let latentText = relation.latent ? "Identified" : "Not identified";
+    let latentText = relation.latent ? "Identified" : "No";
     if (relation.latent && !relation.causal) causalText = "Cannot be determined under latent confounding";
     if (relation.selection){
       causalText = "Cannot be determined under selection";
