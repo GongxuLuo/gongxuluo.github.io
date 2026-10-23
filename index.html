@@ -28,7 +28,7 @@
     /* hero header */
     .hero{background:linear-gradient(180deg,#eef5f2 0%,#f5f6f6 100%);border-bottom:1px solid #e6e8e8;text-align:center}
     .hero-inner{max-width:1240px;margin:0 auto;padding:56px 32px 48px}
-    .venue-chip{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#287a68;background:#fff;border:1px solid #cfe7df;border-radius:999px;padding:4px 14px}
+    .venue-chip{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.02em;color:#287a68;background:#fff;border:1px solid #cfe7df;border-radius:999px;padding:4px 14px}
     h1{max-width:980px;margin:18px auto 24px;font-size:40px;line-height:1.18;letter-spacing:-.01em}
     .hero-btn{display:inline-block;background:#1f2328;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:10px 20px;border-radius:999px}
     .hero-btn:hover{background:#000}
@@ -258,6 +258,7 @@
     .sel-zone{opacity:.9} .sel-zonetxt{fill:#c0392b;font-weight:600;text-anchor:start}
     .sel-line{stroke-dashoffset:0}
     .sel-c3{opacity:1} .sel-c1{opacity:0}
+    .sel-graph{opacity:1}
     @media (prefers-reduced-motion:no-preference){
       .mech-fig *{animation-duration:9s;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
       .reg-x{animation-name:regX} .reg-y{animation-name:regY}
@@ -267,7 +268,7 @@
       .lat-l{animation-name:latL} .lat-x{animation-name:latX} .lat-y{animation-name:latY}
       .lat-px{animation-name:latPX} .lat-py{animation-name:latPY} .lat-link{animation-name:latLink}
       .sel-dead{animation-name:selDead} .sel-zone{animation-name:selZone} .sel-line{animation-name:selLine}
-      .sel-s{animation-name:selS}
+      .sel-s{animation-name:selS} .sel-graph{animation-name:selGraph}
       .sel-c1{animation-name:sel1} .sel-c2{animation-name:sel2} .sel-c3{animation-name:sel3}
     }
     @keyframes regX{0%,10%{transform:scaleY(.15)}22%,55%{transform:scaleY(.85)}62%,92%{transform:scaleY(.08)}100%{transform:scaleY(.15)}}
@@ -287,6 +288,7 @@
     @keyframes selDead{0%,28%{fill:#8b4f81;opacity:.9}40%,92%{fill:#c4c4c4;opacity:.25}98%,100%{fill:#8b4f81;opacity:.9}}
     @keyframes selZone{0%,28%{opacity:0}36%,92%{opacity:.9}97%,100%{opacity:0}}
     @keyframes selLine{0%,54%{stroke-dashoffset:230;opacity:0}55%{stroke-dashoffset:230;opacity:1}68%,92%{stroke-dashoffset:0;opacity:1}96%{stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:230;opacity:0}}
+    @keyframes selGraph{0%,28%{opacity:0}36%,92%{opacity:1}97%,100%{opacity:0}}
     @keyframes selS{0%,28%{fill:#fff}36%,92%{fill:#ead6e6}100%{fill:#fff}}
     @keyframes sel1{0%,30%{opacity:1}33%,96%{opacity:0}100%{opacity:1}}
     @keyframes sel2{0%,31%{opacity:0}34%,54%{opacity:1}57%,100%{opacity:0}}
@@ -476,13 +478,15 @@
       <defs><marker id="selArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8b4f81"/></marker></defs>
       <rect x="40" y="6" width="54" height="28" rx="10" fill="#fff" stroke="#8b4f81" stroke-width="2"/>
       <text class="m-name m-small" x="67" y="25">X</text>
-      <rect class="sel-s" x="133" y="6" width="54" height="28" rx="10" fill="#fff" stroke="#8b4f81" stroke-width="2"/>
-      <text class="m-name m-small" x="160" y="25">S</text>
       <rect x="226" y="6" width="54" height="28" rx="10" fill="#fff" stroke="#8b4f81" stroke-width="2"/>
       <text class="m-name m-small" x="253" y="25">Y</text>
+      <g class="sel-graph">
+      <rect class="sel-s" x="133" y="6" width="54" height="28" rx="10" fill="#fff" stroke="#8b4f81" stroke-width="2"/>
+      <text class="m-name m-small" x="160" y="25">S</text>
       <line x1="96" y1="20" x2="129" y2="20" stroke="#8b4f81" stroke-width="2" marker-end="url(#selArrow)"/>
       <line x1="224" y1="20" x2="191" y2="20" stroke="#8b4f81" stroke-width="2" marker-end="url(#selArrow)"/>
       <text class="m-sub" x="160" y="48">S = cell survives (only survivors are sequenced)</text>
+      </g>
       <polygon class="sel-zone" points="52.0,176.0 287.6,176.0 52.0,69.6" fill="#f6dede"/>
       <text class="m-sub sel-zone sel-zonetxt" x="59.4" y="169.3">die</text>
       <line x1="46" y1="182" x2="304" y2="182" stroke="#bbb" stroke-width="1.2"/>
