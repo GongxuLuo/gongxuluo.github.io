@@ -617,7 +617,7 @@
 
       <div class="pair-summary" aria-label="HCT116 relationship counts">
         <div class="pair-count">
-          <strong>321</strong>
+          <strong>64</strong>
           <span>Causal pairs</span>
         </div>
         <div class="pair-count">
@@ -637,7 +637,7 @@
             <label for="hctPairType">Relationship type</label>
             <select id="hctPairType" class="pair-browser-select">
               <option value="" selected>Select a relationship type</option>
-              <option value="causal">Causal pairs (321)</option>
+              <option value="causal">Causal pairs (64)</option>
               <option value="latent">Latent confounder pairs (40)</option>
               <option value="selection">Selection bias pairs (306)</option>
             </select>
@@ -653,7 +653,7 @@
 
       <div class="relation-query">
         <h3>Gene Pair Relationship</h3>
-        <p class="muted">Each mechanism is reported separately because a gene pair may have more than one source of dependence. For selection pairs, gene Z-scores are taken from ACH-000971.</p>
+        <p class="muted">A causal relation gives the direction of regulation and can be identified together with latent confounding. When only latent confounding is found, GISL confirms a hidden common cause but cannot tell whether the two genes also regulate each other. Under selection, GISL confirms a selection constraint but cannot tell whether a causal relation or latent confounding is also present. For selection pairs, gene Z-scores are taken from ACH-000971.</p>
 
         <div class="gene-query">
           <div class="gene-field">
@@ -814,7 +814,7 @@
     ])
   );
   const hct116PairGroups = {
-    causal: hct116Relations.filter(([, , causal]) => Boolean(causal)),
+    causal: hct116Relations.filter(([, , causal, , selection]) => Boolean(causal) && !selection),
     latent: hct116Relations.filter(([, , , latent]) => Boolean(latent)),
     selection: hct116Relations.filter(([, , , , selection]) => Boolean(selection)),
   };
@@ -930,9 +930,19 @@
     heading.textContent = `${gene1} and ${gene2}`;
     relationshipResult.appendChild(heading);
 
-    appendRelationRow("Causal relation", relation.causal ? relation.causal.replace(" -> ", " → ") : "Not identified");
-    appendRelationRow("Latent confounding", relation.latent ? "Identified" : "Not identified");
-    appendRelationRow("Selection constraint", relation.selection ? "Identified" : "Not identified");
+    // Selection masks both the causal relation and latent confounding.
+    // Without selection, a causal direction is identifiable even when latent confounding is present;
+    // a latent-only pair leaves the causal relation undetermined.
+    let causalText = relation.causal ? relation.causal.replace(" -> ", " → ") : "Not identified";
+    let latentText = relation.latent ? "Identified" : "Not identified";
+    if (relation.latent && !relation.causal) causalText = "Cannot be determined under latent confounding";
+    if (relation.selection){
+      causalText = "Cannot be determined under selection";
+      latentText = "Cannot be determined under selection";
+    }
+    appendRelationRow("Causal relation", causalText);
+    appendRelationRow("Latent confounding", latentText);
+    appendRelationRow("Selection constraint", relation.selection ? "Identified" : "No");
     if (relation.selection){
       appendRelationRow("Gene Z-scores (ACH-000971)", `${hct116ZScoreLabel(gene1)}; ${hct116ZScoreLabel(gene2)}`);
     }
