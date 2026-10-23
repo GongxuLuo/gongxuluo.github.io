@@ -3,7 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gene Regulatory Network Inference in the Presence of Selection Bias and Latent Confounders</title>
+  <title>GISL: Gene Regulatory Network Inference with Perturbation Data</title>
+  <meta name="description" content="GISL uses perturbation data such as Perturb-seq to tell whether the dependency between two genes comes from regulation, a hidden confounder, or cell selection. NeurIPS 2025." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gongxuluo.github.io/" />
+  <meta property="og:title" content="GISL: Not every gene dependency is regulation" />
+  <meta property="og:description" content="GISL uses perturbation data such as Perturb-seq to tell whether the dependency between two genes comes from regulation, a hidden confounder, or cell selection. NeurIPS 2025." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="GISL: Not every gene dependency is regulation" />
+  <meta name="twitter:description" content="GISL uses perturbation data such as Perturb-seq to tell whether the dependency between two genes comes from regulation, a hidden confounder, or cell selection. NeurIPS 2025." />
   <style>
     html{scroll-behavior:smooth}
     body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;margin:0;line-height:1.6;color:#1f2328;background:#f5f6f6}
@@ -307,6 +315,16 @@
     .hero-btn.secondary{background:#fff;color:#1f2328;border:1px solid #d0d7de;margin-left:8px}
     .hero-btn.secondary:hover{background:#f3f4f6}
     .step code{overflow-wrap:anywhere}
+    /* hero copy */
+    .hero-lede{max-width:680px;margin:-8px auto 28px;font-size:19px;line-height:1.55;color:#3b4248}
+    .hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+    .hero-actions .hero-btn.secondary{margin-left:0}
+    .paper-ref{max-width:760px;margin:30px auto 0;padding-top:20px;border-top:1px solid #dbe6e2;font-size:15px;color:#555}
+    .paper-ref .paper-title{display:block;font-weight:600;color:#1f2328;margin-bottom:4px;text-wrap:balance}
+    .paper-ref a{color:#0b57d0}
+    @media (max-width: 760px){ .hero-lede{font-size:17px} .hero-actions .hero-btn{box-sizing:border-box;flex:1 1 calc(50% - 10px);text-align:center;padding:10px 12px} }
+    /* citation */
+    .bibtex{white-space:pre;overflow-x:auto;overflow-wrap:normal}
     @media (max-width: 1100px){ .steps{grid-template-columns:minmax(0,1fr)} }
 
   </style>
@@ -320,6 +338,7 @@
         <a class="nav-sec" href="#k562">K562 example</a>
         <a class="nav-sec" href="#cell-lines">Other cell lines</a>
         <a class="nav-sec" href="#upload">Upload results</a>
+        <a class="nav-sec" href="#cite">Cite</a>
         <a class="nav-paper" href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/1b3035f142d6abc301fb0476151314b5-Abstract-Conference.html" target="_blank" rel="noopener">Paper ↗</a>
       </div>
     </div>
@@ -328,11 +347,21 @@
   <header class="hero" id="top">
     <div class="hero-inner">
       <span class="venue-chip">NeurIPS 2025</span>
-      <h1>Gene Regulatory Network Inference in the Presence of Selection Bias and Latent Confounders</h1>
-      <div class="paper-meta">
-        <a class="hero-btn" href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/1b3035f142d6abc301fb0476151314b5-Abstract-Conference.html" target="_blank" rel="noopener">View paper</a>
+      <h1>GISL: Not every gene dependency is regulation</h1>
+      <p class="hero-lede">
+        Using perturbation data such as Perturb&#8209;seq, GISL tells whether the dependency between two genes
+        comes from regulation, a hidden confounder, or cell&nbsp;selection.
+      </p>
+      <div class="hero-actions">
+        <a class="hero-btn" href="#cell-lines">Explore results</a>
+        <a class="hero-btn secondary" href="#upload">Run on your data</a>
+        <a class="hero-btn secondary" href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/1b3035f142d6abc301fb0476151314b5-Abstract-Conference.html" target="_blank" rel="noopener">Paper</a>
         <a class="hero-btn secondary" href="https://github.com/GongxuLuo/Gene-Regulatory-Network-Inference-in-the-Presence-of-Selection-Bias-and-Latent-Confounders" target="_blank" rel="noopener">Code</a>
       </div>
+      <p class="paper-ref">
+        <span class="paper-title">Gene Regulatory Network Inference in the Presence of Selection Bias and Latent Confounders</span>
+        Gongxu Luo, Haoyue Dai, Loka Li, Chengqian Gao, Boyang Sun, Kun Zhang &mdash; <a href="#cite">Cite this work</a>
+      </p>
     </div>
   </header>
 
@@ -688,6 +717,17 @@
     <p class="upload-note">
       Uploading requires a free GitHub account. Files up to 25 MB can be attached directly; for larger results, include a download link in&nbsp;the&nbsp;form.
     </p>
+  </section>
+
+  <section class="card" id="cite">
+    <h2 class="assumption-title">5. Cite</h2>
+    <p>If you use GISL or these results in your work, please cite:</p>
+    <div class="cmd bibtex"><span class="copy-src">@inproceedings{luo2025gisl,
+  title     = {Gene Regulatory Network Inference in the Presence of Selection Bias and Latent Confounders},
+  author    = {Luo, Gongxu and Dai, Haoyue and Li, Loka and Gao, Chengqian and Sun, Boyang and Zhang, Kun},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year      = {2025}
+}</span><button class="copy-btn" type="button">Copy</button></div>
   </section>
   </main>
 <script>
