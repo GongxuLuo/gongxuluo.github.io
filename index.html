@@ -620,7 +620,7 @@
 
       <div class="pair-summary" aria-label="HCT116 relationship counts">
         <div class="pair-count">
-          <strong>64</strong>
+          <strong>43</strong>
           <span>Causal pairs</span>
         </div>
         <div class="pair-count">
@@ -640,7 +640,7 @@
             <label for="hctPairType">Relationship type</label>
             <select id="hctPairType" class="pair-browser-select">
               <option value="" selected>Select a relationship type</option>
-              <option value="causal">Causal pairs (64)</option>
+              <option value="causal">Causal pairs (43)</option>
               <option value="latent">Latent confounder pairs (40)</option>
               <option value="selection">Selection bias pairs (306)</option>
             </select>
@@ -816,15 +816,22 @@
       { causal, latent: Boolean(latent), selection: Boolean(selection) },
     ])
   );
+  // Genes that appear in at least one selection pair.
+  const hct116SelectionGenes = new Set(
+    hct116Relations.filter(([, , , , selection]) => Boolean(selection)).flatMap(([gene1, gene2]) => [gene1, gene2])
+  );
+  // A causal direction is determined only without selection on the pair, and, under latent
+  // confounding, only when the effect gene is not itself under selection.
+  function hct116CausalDetermined([, , causal, latent, selection]){
+    if (!causal || selection) return false;
+    if (latent && hct116SelectionGenes.has(causal.split(" -> ")[1])) return false;
+    return true;
+  }
   const hct116PairGroups = {
-    causal: hct116Relations.filter(([, , causal, , selection]) => Boolean(causal) && !selection),
+    causal: hct116Relations.filter(hct116CausalDetermined),
     latent: hct116Relations.filter(([, , , latent]) => Boolean(latent)),
     selection: hct116Relations.filter(([, , , , selection]) => Boolean(selection)),
   };
-  // Genes that appear in at least one selection pair.
-  const hct116SelectionGenes = new Set(
-    hct116PairGroups.selection.flatMap(([gene1, gene2]) => [gene1, gene2])
-  );
   const pairTypeNames = {
     causal: "causal",
     latent: "latent confounder",
