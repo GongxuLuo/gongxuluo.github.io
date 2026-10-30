@@ -118,6 +118,8 @@
       font-size:19px;
     }
     .figure-label{margin:16px 0 10px}
+    .edge-legend{display:inline-flex;align-items:center;gap:6px;margin:0 8px;white-space:nowrap;color:#444}
+    .edge-legend svg{flex:none}
     .zrow{
       display:flex;
       justify-content:space-between;
@@ -547,13 +549,14 @@
 
       <p class="muted figure-label">
         Selection-induced dependency structure (PDF).
-        <a class="btn" href="assets/figures/selection_survival.pdf?v=69fbb9a" target="_blank" rel="noopener">Open PDF</a>
+        <span class="edge-legend"><svg width="34" height="10" viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" stroke="#ff0000" stroke-width="2" stroke-dasharray="5 3"/></svg>Red dashed lines: unknown</span>
+        <a class="btn" href="assets/figures/selection_survival.pdf?v=20261030" target="_blank" rel="noopener">Open PDF</a>
       </p>
 
-      <object class="pdfbox" data="assets/figures/selection_survival.pdf?v=69fbb9a" type="application/pdf">
+      <object class="pdfbox" data="assets/figures/selection_survival.pdf?v=20261030" type="application/pdf">
         <div class="pdf-aspect" style="--ratio: 0.62;">
   <iframe
-    src="assets/figures/selection_survival.pdf?v=69fbb9a"
+    src="assets/figures/selection_survival.pdf?v=20261030"
     title="Selection survival PDF"
     loading="lazy">
   </iframe>
