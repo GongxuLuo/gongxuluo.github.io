@@ -566,7 +566,7 @@
       <p>
         The effect of selection on a gene can be assessed using a Z-score, which quantifies the change in cellular growth
         following perturbation. Intuitively, perturbing a gene under strong selection constraints may disrupt a condition
-        required for cellular survival or proliferation, leading to a larger-magnitude Z-score.
+        required for cellular survival or proliferation, leading to a more negative Z-score.
       </p>
 
       <aside class="zpanel">
@@ -575,7 +575,7 @@
             <div style="font-weight:600;">
               Gene <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8686573/" target="_blank" rel="noopener">Z-scores</a>
             </div>
-            <div class="muted" style="font-size:12px;">ACH-000551 &middot; High score: |Z| &ge; 0.15</div>
+            <div class="muted" style="font-size:12px;">ACH-000551 &middot; High score: Z &lt; &minus;0.15</div>
           </div>
           <input id="zFilter" class="zfilter" placeholder="Filter by gene…" />
         </div>
@@ -773,7 +773,7 @@
       const row = document.createElement("div");
       row.className = "zrow";
 
-      const badge = Math.abs(item.z) >= 0.15 ? "high" : "low";
+      const badge = item.z < -0.15 ? "high" : "low";
 
       row.innerHTML = `
         <div>
