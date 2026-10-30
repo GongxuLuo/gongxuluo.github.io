@@ -656,7 +656,7 @@
 
       <div class="relation-query">
         <h3>Gene Pair Relationship</h3>
-        <p class="muted">A causal relation gives the direction of regulation and can be identified together with latent confounding. When only latent confounding is found, GISL confirms a hidden common cause but cannot tell whether the two genes also regulate each other. Under selection, GISL confirms a selection constraint but cannot tell whether a causal relation or latent confounding is also present. For selection pairs, gene Z-scores are taken from ACH-000971.</p>
+        <p class="muted">A causal relation gives the direction of regulation and can be identified together with latent confounding, unless the effect gene is itself under selection, in which case the causal relation cannot be determined. When only latent confounding is found, no causal relation is reported. Under selection, GISL confirms a selection constraint but cannot tell whether a causal relation or latent confounding is also present. For selection pairs, gene Z-scores are taken from ACH-000971.</p>
 
         <div class="gene-query">
           <div class="gene-field">
@@ -821,6 +821,10 @@
     latent: hct116Relations.filter(([, , , latent]) => Boolean(latent)),
     selection: hct116Relations.filter(([, , , , selection]) => Boolean(selection)),
   };
+  // Genes that appear in at least one selection pair.
+  const hct116SelectionGenes = new Set(
+    hct116PairGroups.selection.flatMap(([gene1, gene2]) => [gene1, gene2])
+  );
   const pairTypeNames = {
     causal: "causal",
     latent: "latent confounder",
@@ -933,12 +937,18 @@
     heading.textContent = `${gene1} and ${gene2}`;
     relationshipResult.appendChild(heading);
 
-    // Selection masks both the causal relation and latent confounding.
-    // Without selection, a causal direction is identifiable even when latent confounding is present;
-    // a latent-only pair leaves the causal relation undetermined.
-    let causalText = relation.causal ? relation.causal.replace(" -> ", " → ") : "Not identified";
+    // Selection pairs: the causal relation and latent confounding cannot be determined.
+    // Latent confounding + causal relation: the direction cannot be determined when the
+    // effect gene is itself under selection (appears in a selection pair); otherwise it is shown.
+    // Latent confounding without a causal relation: no causal relation ("No").
+    let causalText = relation.causal ? relation.causal.replace(" -> ", " → ") : "No";
     let latentText = relation.latent ? "Identified" : "No";
-    if (relation.latent && !relation.causal) causalText = "Cannot be determined under latent confounding";
+    if (relation.latent && relation.causal){
+      const effectGene = relation.causal.split(" -> ")[1];
+      if (hct116SelectionGenes.has(effectGene)){
+        causalText = `Cannot be determined: effect gene ${effectGene} is under selection`;
+      }
+    }
     if (relation.selection){
       causalText = "Cannot be determined under selection";
       latentText = "Cannot be determined under selection";
