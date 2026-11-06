@@ -228,6 +228,7 @@
     .relation-name{font-weight:600;color:#444}
     .relation-value{color:#222}
     .cell-line-message{margin:14px 0 0;color:#666}
+    .dataset-source{margin:8px 0 0;font-size:14px;color:#444}
     @media (max-width:760px){
       .dataset-stats,.pair-summary,.pair-browser-controls,.gene-query{grid-template-columns:1fr}
       .dataset-stat{border-left:0;border-top:1px solid #eee}
@@ -676,6 +677,89 @@
         </div>
       </div>
     </div>
+
+    <div id="k562Panel" class="cell-line-panel" hidden>
+      <h3>K562 Chronic Myelogenous Leukemia Cell Line</h3>
+      <p class="muted" style="margin:3px 0 0;">DepMap ID: ACH-000551</p>
+      <p class="dataset-source">
+        Dataset: <a href="https://doi.org/10.1126/science.aax4438" target="_blank" rel="noopener">Norman et al. (2019)</a>,
+        CRISPRa Perturb-seq of single and paired gene activations in K562 cells. This is a different dataset from the
+        Dixit et al. (2016) example in Section&nbsp;2.
+      </p>
+
+      <div class="dataset-stats" aria-label="K562 dataset summary">
+        <div class="dataset-stat">
+          <span class="stat-value">5,045</span>
+          <span class="stat-label">Genes</span>
+        </div>
+        <div class="dataset-stat">
+          <span class="stat-value">91,205</span>
+          <span class="stat-label">Unique cells</span>
+        </div>
+        <div class="dataset-stat">
+          <span class="stat-value">105</span>
+          <span class="stat-label">Perturbed genes</span>
+        </div>
+      </div>
+
+      <div class="pair-summary" aria-label="K562 relationship counts">
+        <div class="pair-count">
+          <strong>59</strong>
+          <span>Causal pairs</span>
+        </div>
+        <div class="pair-count">
+          <strong>2</strong>
+          <span>Pairs under latent confounding</span>
+        </div>
+        <div class="pair-count">
+          <strong>17</strong>
+          <span>Pairs under selection constraints</span>
+        </div>
+      </div>
+
+      <div class="pair-browser">
+        <h3>Browse All Gene Pairs</h3>
+        <div class="pair-browser-controls">
+          <div class="pair-browser-field">
+            <label for="k562PairType">Relationship type</label>
+            <select id="k562PairType" class="pair-browser-select">
+              <option value="" selected>Select a relationship type</option>
+              <option value="causal">Causal pairs (59)</option>
+              <option value="latent">Latent confounder pairs (2)</option>
+              <option value="selection">Selection bias pairs (17)</option>
+            </select>
+          </div>
+          <div class="pair-browser-field">
+            <label id="k562PairListLabel" for="k562PairList">Gene pair</label>
+            <select id="k562PairList" class="pair-browser-select" disabled>
+              <option value="" selected>Select a relationship type first</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="relation-query">
+        <h3>Gene Pair Relationship</h3>
+        <p class="muted">A causal relation gives the direction of regulation and can be identified together with latent confounding, unless the effect gene is itself under selection, in which case the causal relation cannot be determined. When only latent confounding is found, no causal relation is reported. Under selection, GISL confirms a selection constraint but cannot tell whether a causal relation or latent confounding is also present. For selection pairs, gene Z-scores are taken from ACH-000551.</p>
+
+        <div class="gene-query">
+          <div class="gene-field">
+            <label for="k562Gene1">Gene 1</label>
+            <input id="k562Gene1" class="gene-input" list="k562Genes" autocomplete="off" placeholder="Select or type a gene" />
+          </div>
+          <div class="gene-field">
+            <label for="k562Gene2">Gene 2</label>
+            <input id="k562Gene2" class="gene-input" list="k562Genes" autocomplete="off" placeholder="Select or type a gene" />
+          </div>
+          <button id="k562QueryRelationship" class="query-button" type="button">Query relationship</button>
+        </div>
+
+        <datalist id="k562Genes"></datalist>
+        <div id="k562RelationshipResult" class="query-result" aria-live="polite">
+          <p class="muted">Select two genes from the K562 result set.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="card" id="upload">
@@ -761,6 +845,17 @@
   const hct116ZScores = {"ABCC1":-0.16752874342436228,"ABCC4":0.10231805234806683,"ACTN4":-0.011169641928899918,"AHI1":-0.1972775127787046,"AKAP12":-0.08210417479872785,"AKAP13":-0.04685376867287772,"ALDH1A3":0.13193997576480537,"ALPK1":0.029766250306410023,"ANK2":0.10303555900640848,"ANKHD1":-0.16466716563398276,"ANKRD11":-0.423124950399718,"ANP32A":0.16919301751871868,"AP2S1":-0.5242438690597159,"APBB2":0.02485661650985615,"ARFIP1":-0.13177954651759471,"ARHGAP18":0.10451701074113079,"ARID1B":0.02716583063836983,"ARID4B":-0.5366163005685135,"ARIH1":-0.5287806219156251,"ARMH3":-0.057207795401457824,"ASPM":-0.5037143934579859,"ATE1":-0.07478393094100193,"ATF3":7.672988826060156e-05,"ATF4":-0.9489650846993202,"ATG7":0.06403810348532145,"ATP11A":-0.024374536853102625,"ATP5F1A":-0.36537617595793687,"ATP5F1B":-0.6413388712185197,"ATP9B":-0.02644691577856737,"B2M":-0.13618604235509713,"BCAR3":-0.13296962976417329,"BCL2L1":-1.8441753727869852,"BMERB1":-0.08809365518374873,"BMP4":-0.1669045064774703,"BRIP1":-0.003812023008725407,"BTG1":-0.11123930800370375,"C12orf57":-0.010507387533079057,"CACYBP":-0.4610550343101387,"CALM1":-0.015140769577429412,"CAMKMT":-0.059739827194971895,"CAV1":0.15718093907523487,"CCDC18":null,"CCND1":-1.6808406529891156,"CCNF":-0.0030539370297091306,"CCNG1":-0.015921439301527465,"CD81":0.10590626816976825,"CDC37":-0.9186921084142146,"CDC42BPA":0.005644132900960941,"CDKN1A":0.36351277991708253,"CENPF":-0.1391173377732613,"CIT":0.017996835124086175,"CKLF":-0.182511181448543,"CKS2":-0.7302169549752973,"CLIC1":-0.07446609537773016,"CLIC4":-0.11406546860644981,"CLU":0.13976133718992895,"CMBL":0.024341336430572597,"CMIP":0.0240461910891277,"CMSS1":0.23747892515972963,"COMMD1":-0.04492074501731526,"COX6A1":-0.5565927589397057,"CPA4":-0.010943942765702774,"CRIM1":0.12729039712530602,"CSNK1A1":-1.1352102659094923,"CSNK2B":-1.0055701002327575,"CUEDC1":0.06247366719633063,"CUTA":-0.09513429284020111,"DAP":-0.33490653246634894,"DCBLD2":-0.18305614552247995,"DDIT4":-0.09149289424706109,"DDX24":-1.4216614897964035,"DEPDC1":-0.33287357069372847,"DHCR24":-0.047203141739992495,"DHRS3":0.15602672388771655,"DISP1":0.10977288228915011,"DNAJA1":-0.3921836083016262,"DST":-0.008055851040274717,"DUSP6":0.18317162238082188,"EDF1":-0.13165350107932022,"EEF1A2":0.13787468762690588,"EEF2":-2.15845951252799,"EIF3H":-0.9104332119949246,"EMP3":-0.047018482826287664,"EPRS1":-1.561207696718989,"ERH":-1.7935026020735916,"ERRFI1":0.2204480149077349,"ESRP1":-0.19515595258166085,"ESYT2":0.3538258580464329,"EXO1":-0.06900708428713051,"F3":-0.09926032782383921,"FAM241A":-0.00995619612489626,"FANCI":-0.3734687210090721,"FAR1":-0.021182271559487428,"FARP1":0.043095609887507526,"FAT1":0.2766647032936915,"FBXL5":0.0759221930907896,"FBXW7":0.021698380202060837,"FDFT1":-0.028251839891867206,"FOXP1":-0.034646623776266136,"FRMD5":-0.23085160006577635,"FSCN1":0.08587954094533248,"FTH1":null,"FUS":-0.07724489606831268,"GADD45A":0.02634457809689829,"GPATCH2":-0.16416571229554208,"GPRC5A":0.14808724780507354,"H2AC12":-0.7820326603774564,"H2AC20":-0.95200467581832,"H2AX":-0.40296384225786464,"HMGA1":-0.3798354919859287,"HMGB3":-0.05294527158139397,"HNRNPA2B1":-0.23300776450037464,"HNRNPM":-0.9482751383068011,"HSP90AA1":-0.07732362402278742,"HSPB1":0.16613058069109687,"HSPE1":-2.6837788200476034,"HTR7":-0.097105031242319,"ID1":-0.016366779920840645,"ID2":0.008054535144317303,"ID3":0.014132117945018743,"IER2":-0.016118429408022904,"IER5L":-0.10826577080266023,"IFITM3":null,"IGF2BP2":-0.011856162771105988,"IGF2BP3":-0.07049996866954279,"INPP4B":0.014726819973825925,"ITSN2":-0.3606470127950739,"KIAA2026":null,"KIF14":-0.13388701421540683,"KIF18A":-0.7271199513731607,"KIFC1":-0.42232063056363145,"KITLG":-0.2736060661890104,"KLK8":-0.05819630803204433,"KNSTRN":-0.11496827087761115,"KPNA2":-0.29436106658242167,"KRT19":0.06738086651580479,"LAGE3":-0.27391554490487613,"LCORL":-0.024618104542826397,"LGALS1":0.13444671300581307,"LGALS3":0.0019409930274025683,"LIMA1":-0.09932370177160307,"LMBR1":0.22286406688285154,"LMNA":-0.20726330728838918,"LPP":0.22300794223266018,"LRCH3":-0.09115164362542713,"MALL":-0.3110624153474335,"MAML3":-0.11080978586500688,"MAP3K5":0.2600726226228006,"MAP4":0.09112695922817218,"MARS1":-2.0307262453714814,"MBNL1":-0.29734635247676966,"MCC":0.16239364677933793,"METTL15":-0.3819412244078583,"MRPL57":-0.41699566902810564,"MRPS12":-0.4982181348794863,"MT2A":null,"MTAP":-0.01631425095971438,"MTHFD2":-0.10298787228077835,"MTUS1":-0.1488149244256392,"MYOF":0.054153805670106865,"NAF1":-0.28305348579948,"NAV3":-0.19340408240788592,"NDUFB3":-0.7040070579584023,"NEBL":0.1643442111926388,"NFAT5":-0.12093330124219065,"NFATC3":-0.14845815152006486,"NHS":-0.1632082270793774,"NHSL1":0.12793615771039882,"NOB1":-1.0363018188922253,"NQO1":0.14194936437145259,"NR6A1":0.05074955879264214,"NTSR1":0.057801693605218585,"OPHN1":0.036330874702900195,"PALS2":0.5858976397074361,"PCM1":-0.2149431018398112,"PDCD6":-0.20084884453111673,"PDS5A":-0.5068589727586463,"PEAK1":0.10473516523006779,"PEBP1":-0.006968989115412855,"PHC2":-0.03481677363496807,"PHF3":-0.056248135718087025,"PHLDA1":0.15212055070685465,"PKM":-1.2336682096014413,"PLAGL1":-0.024848794457752666,"PLK2":0.15253849648892107,"PLP2":0.1939545567059191,"POLQ":-0.5898639468322707,"POLR1G":-0.5820997532309935,"PPARG":0.14698334329006948,"PPFIBP1":0.009865792118217934,"PPP1R12B":-0.005517643191631562,"PRRC2C":-0.09328354849924417,"PSAT1":-0.18459003658721404,"PSME2":-0.5603386200226588,"PSPC1":-0.2613205203959514,"PTMS":-0.006517439294746685,"PTPRG":-0.11311585034653693,"PTPRK":0.11677401161021747,"QKI":0.06705269684788277,"RAB10":-0.9329550101704065,"RAB25":-0.05264674668923117,"RABAC1":-0.1431090788615452,"RABGAP1L":-0.2468849167241398,"RAC1":-0.23529361437844498,"RBP1":0.09955455195056978,"RBPJ":-0.1800756109645965,"RCOR1":-0.2744551205741964,"RFC5":-1.2189876305797367,"RFX3":0.15315269559683117,"RHOBTB3":0.07221358389935095,"RNF43":0.056504266021774927,"RPL22":-0.559707528784519,"RPL36A":-1.5496737974308084,"RPS27L":-0.08255294021532751,"RPS29":-2.5104679999844453,"RPS6KC1":-0.007499535058895095,"RTTN":-0.5935645066829155,"RUNX1":-0.14460621994661213,"S100A10":-0.02114479344072183,"S100A14":-0.15098342533257744,"S100A6":0.04859736367718523,"SAMD3":0.24521099490506762,"SAMD5":0.039917917239200976,"SAP18":-0.9100380556557828,"SAT1":-0.08647897538738586,"SBF2":-0.07632193525665297,"SCLT1":0.33689508801761614,"SELENOW":-0.15407954814037259,"SEM1":-1.2404576537715406,"SENP5":-0.0017388929535323769,"SEPTIN7":null,"SETD5":-0.46370407871222397,"SFN":-0.0711430246552846,"SFPQ":-1.266239912151604,"SH3RF1":0.16819764691459121,"SIPA1L1":0.11647105009506664,"SLC25A6":null,"SLC35F3":-0.04205783589893923,"SMARCC1":-0.17629007942173008,"SNRPC":-0.6468565416156639,"SNX25":-0.48189810956540474,"SON":-1.007439000218458,"SOX4":0.15373442890248368,"SPATS2":0.11382166109741533,"SPATS2L":-0.08684067803617986,"SRGAP1":-0.19126403028832104,"SRP14":-0.8030332142760771,"SSR2":-0.5523649498242159,"SSR4":-0.07662260687755354,"STK33":0.03671022388245025,"SYNE2":0.055114815518364904,"SYT1":-0.018483038625209218,"SYTL3":0.19942760827456407,"TAF2":-1.0112183235793835,"TANK":-0.05881710185952588,"TBC1D19":0.19777583715265543,"TBC1D4":0.10569570053761346,"TCEAL4":0.3537404621206987,"TCF7L2":-0.3821417463202236,"TEAD1":-0.31339345912952576,"TECR":-0.28281128646873693,"THSD4":0.13487807656519785,"TIAM1":-0.19322004813197347,"TIGAR":0.1617877673966978,"TIMP1":-0.08951206336464557,"TKT":-0.42329674101465103,"TMED10":-0.24177255146072124,"TMEM131L":-0.0029705973995973684,"TMSB4X":null,"TPI1":-0.8653456007345491,"TRA2A":-0.18030538725481787,"TUBB4B":-0.5463634126252999,"UBAC2":-0.06559320603711002,"UBE2D2":-0.022570475830256877,"UBE2E1":0.21839498935577384,"UBE2K":0.039149529474502315,"UBXN7":-0.10422942046989894,"UHRF1":null,"USP10":-0.8349526146884105,"USP34":-0.21496358685359065,"UTRN":0.046651266808264445,"VGLL4":0.2283941134160976,"VPS8":-0.003167992230283162,"VTI1A":0.03866974203456368,"WDPCP":-0.05886577340666001,"WWC1":0.11856101882503815,"XBP1":-0.012549641199546012,"XPC":0.026001381501390478,"YEATS2":-0.28258425955006483,"ZBTB20":-0.03217140657928966,"ZC3H12B":-0.010482062041507548,"ZCCHC8":null,"ZFP36L1":-0.1929469965057417,"ZMAT3":0.0504623882204572,"ZNF804A":0.04887855605562656};
   // HCT116_ZSCORE_DATA_END
 
+  // K562_RELATION_DATA_START
+  // Source: Norman et al. (2019) K562 CRISPRa Perturb-seq; pairs as drawn by plot.py
+  // (per_dag_kci_m.npy + latent/selection/add_pairs lists). Row: [gene1, gene2, causal, latent, selection].
+  const k562Relations = [["ARID1A","CBFA2T3","",0,1],["ARID1A","IKZF3","IKZF3 -> ARID1A",0,0],["BAK1","POU3F2","",0,1],["CBFA2T3","FEV","CBFA2T3 -> FEV",0,0],["CBFA2T3","FOXA3","CBFA2T3 -> FOXA3",0,0],["CBFA2T3","HOXB9","CBFA2T3 -> HOXB9",0,0],["CBFA2T3","LYL1","",0,1],["CBFA2T3","MAP7D1","CBFA2T3 -> MAP7D1",0,0],["CBFA2T3","MIDN","CBFA2T3 -> MIDN",0,0],["CBL","IER5L","CBL -> IER5L",0,0],["CBL","KMT2A","",0,1],["CBL","SPI1","SPI1 -> CBL",0,0],["CDKN1A","CNN1","",0,1],["CDKN1A","CSRNP1","CSRNP1 -> CDKN1A",0,0],["CDKN1C","ZNF318","ZNF318 -> CDKN1C",0,0],["CEBPA","FEV","CEBPA -> FEV",1,0],["CEBPA","SLC38A2","CEBPA -> SLC38A2",0,0],["CEBPB","KIF18B","CEBPB -> KIF18B",0,0],["CELF2","FOXL2","CELF2 -> FOXL2",0,0],["CELF2","IGDCC3","CELF2 -> IGDCC3",0,0],["CELF2","POU3F2","CELF2 -> POU3F2",0,0],["CELF2","SET","CELF2 -> SET",0,0],["CITED1","NCL","CITED1 -> NCL",0,0],["CKS1B","KIF2C","CKS1B -> KIF2C",0,0],["CKS1B","PLK4","PLK4 -> CKS1B",0,0],["CKS1B","SPI1","SPI1 -> CKS1B",0,0],["CNN1","EGR1","CNN1 -> EGR1",0,0],["CNN1","RREB1","CNN1 -> RREB1",0,0],["COL1A1","EGR1","EGR1 -> COL1A1",0,0],["COL2A1","SAMD1","",0,1],["COL2A1","UBASH3A","COL2A1 -> UBASH3A",0,0],["CSRNP1","EGR1","EGR1 -> CSRNP1",0,0],["DUSP9","ELMSAN1","",0,1],["EGR1","ISL2","EGR1 -> ISL2",0,0],["EGR1","JUN","EGR1 -> JUN",0,0],["ETS2","IER5L","IER5L -> ETS2",0,0],["FEV","HOXC13","",0,1],["FEV","IGDCC3","IGDCC3 -> FEV",0,0],["FEV","MAP7D1","",0,1],["FEV","NCL","FEV -> NCL",0,0],["FEV","STIL","",0,1],["FOXA1","TP73","TP73 -> FOXA1",0,0],["FOXL2","SET","FOXL2 -> SET",0,0],["GLB1L2","SLC38A2","SLC38A2 -> GLB1L2",0,0],["HNF4A","TBX3","HNF4A -> TBX3",0,0],["HOXB9","PTPN12","PTPN12 -> HOXB9",0,0],["HOXB9","SLC38A2","SLC38A2 -> HOXB9",0,0],["HOXC13","KMT2A","KMT2A -> HOXC13",0,0],["HOXC13","SET","HOXC13 -> SET",0,0],["IGDCC3","ZC3HAV1","ZC3HAV1 -> IGDCC3",0,0],["IKZF3","TGFBR2","IKZF3 -> TGFBR2",0,0],["IRF1","JUN","IRF1 -> JUN",0,0],["IRF1","POU3F2","IRF1 -> POU3F2",0,0],["JUN","SAMD1","SAMD1 -> JUN",0,0],["KLF1","LYL1","KLF1 -> LYL1",0,0],["KLF1","TMSB4X","",0,1],["KLF1","UBASH3A","KLF1 -> UBASH3A",0,0],["KMT2A","NCL","KMT2A -> NCL",0,0],["KMT2A","SET","KMT2A -> SET",0,0],["MAP4K5","SLC4A1","SLC4A1 -> MAP4K5",0,0],["MAPK1","TMSB4X","",0,1],["MAPK1","ZC3HAV1","ZC3HAV1 -> MAPK1",0,0],["NCL","SAMD1","SAMD1 -> NCL",0,0],["NCL","SET","NCL -> SET",0,0],["OSR2","SAMD1","OSR2 -> SAMD1",0,0],["PRDM1","SET","",0,1],["PTPN1","RHOXF2BB","PTPN1 -> RHOXF2BB",1,0],["PTPN1","SET","PTPN1 -> SET",0,0],["RHOXF2BB","SET","RHOXF2BB -> SET",0,0],["RREB1","ZC3HAV1","",0,1],["SAMD1","UBASH3B","SAMD1 -> UBASH3B",0,0],["SET","ZC3HAV1","",0,1],["SLC38A2","UBASH3A","SLC38A2 -> UBASH3A",0,0],["SPI1","TGFBR2","",0,1],["SPI1","TP73","TP73 -> SPI1",0,0],["SPI1","ZBTB25","SPI1 -> ZBTB25",0,0],["TSC22D1","ZC3HAV1","",0,1]];
+  // K562_RELATION_DATA_END
+
+  // K562_ZSCORE_DATA_START
+  // ACH-000551 Z-scores for genes in K562 selection pairs (to be filled in).
+  const k562ZScores = {};
+  // K562_ZSCORE_DATA_END
+
   function fmtZ(z){
     const sign = z >= 0 ? "+" : "";
     return `${sign}${z.toFixed(3)}`;
@@ -799,181 +894,213 @@
 
   const cellLineSelect = document.getElementById("cellLine");
   const cellLineMessage = document.getElementById("cellLineMessage");
-  const hct116Panel = document.getElementById("hct116Panel");
-  const hctGene1 = document.getElementById("hctGene1");
-  const hctGene2 = document.getElementById("hctGene2");
-  const hctPairType = document.getElementById("hctPairType");
-  const hctPairList = document.getElementById("hctPairList");
-  const hctPairListLabel = document.getElementById("hctPairListLabel");
-  const relationshipResult = document.getElementById("relationshipResult");
 
-  const hct116GeneNames = [...new Set(hct116Relations.flatMap(([gene1, gene2]) => [gene1, gene2]))]
-    .sort((a, b) => a.localeCompare(b));
-  const hct116GeneSet = new Set(hct116GeneNames);
-  const hct116RelationMap = new Map(
-    hct116Relations.map(([gene1, gene2, causal, latent, selection]) => [
-      `${gene1}|${gene2}`,
-      { causal, latent: Boolean(latent), selection: Boolean(selection) },
-    ])
-  );
-  // Genes that appear in at least one selection pair.
-  const hct116SelectionGenes = new Set(
-    hct116Relations.filter(([, , , , selection]) => Boolean(selection)).flatMap(([gene1, gene2]) => [gene1, gene2])
-  );
-  // A causal direction is determined only without selection on the pair, and, under latent
-  // confounding, only when the effect gene is not itself under selection.
-  function hct116CausalDetermined([, , causal, latent, selection]){
-    if (!causal || selection) return false;
-    if (latent && hct116SelectionGenes.has(causal.split(" -> ")[1])) return false;
-    return true;
-  }
-  const hct116PairGroups = {
-    causal: hct116Relations.filter(hct116CausalDetermined),
-    latent: hct116Relations.filter(([, , , latent]) => Boolean(latent)),
-    selection: hct116Relations.filter(([, , , , selection]) => Boolean(selection)),
-  };
   const pairTypeNames = {
     causal: "causal",
     latent: "latent confounder",
     selection: "selection bias",
   };
 
-  const geneOptions = document.createDocumentFragment();
-  for (const gene of hct116GeneNames){
-    const option = document.createElement("option");
-    option.value = gene;
-    geneOptions.appendChild(option);
+  // Builds the pair browser and pair query for one cell line from its relation rows
+  // [gene1, gene2, causal, latent, selection] and its DepMap Z-scores.
+  function setupCellLine(config){
+    const { label, depmapId, relations, zScores, ids } = config;
+    const panel = document.getElementById(ids.panel);
+    const geneInput1 = document.getElementById(ids.gene1);
+    const geneInput2 = document.getElementById(ids.gene2);
+    const pairType = document.getElementById(ids.pairType);
+    const pairList = document.getElementById(ids.pairList);
+    const pairListLabel = document.getElementById(ids.pairListLabel);
+    const resultBox = document.getElementById(ids.result);
+
+    const geneNames = [...new Set(relations.flatMap(([gene1, gene2]) => [gene1, gene2]))]
+      .sort((a, b) => a.localeCompare(b));
+    const geneSet = new Set(geneNames);
+    const relationMap = new Map(
+      relations.map(([gene1, gene2, causal, latent, selection]) => [
+        `${gene1}|${gene2}`,
+        { causal, latent: Boolean(latent), selection: Boolean(selection) },
+      ])
+    );
+    // Genes that appear in at least one selection pair.
+    const selectionGenes = new Set(
+      relations.filter(([, , , , selection]) => Boolean(selection)).flatMap(([gene1, gene2]) => [gene1, gene2])
+    );
+    // A causal direction is determined only without selection on the pair, and, under latent
+    // confounding, only when the effect gene is not itself under selection.
+    function causalDetermined([, , causal, latent, selection]){
+      if (!causal || selection) return false;
+      if (latent && selectionGenes.has(causal.split(" -> ")[1])) return false;
+      return true;
+    }
+    const pairGroups = {
+      causal: relations.filter(causalDetermined),
+      latent: relations.filter(([, , , latent]) => Boolean(latent)),
+      selection: relations.filter(([, , , , selection]) => Boolean(selection)),
+    };
+
+    const geneOptions = document.createDocumentFragment();
+    for (const gene of geneNames){
+      const option = document.createElement("option");
+      option.value = gene;
+      geneOptions.appendChild(option);
+    }
+    document.getElementById(ids.datalist).appendChild(geneOptions);
+
+    pairType.addEventListener("change", () => {
+      const type = pairType.value;
+      const records = pairGroups[type] || [];
+      pairList.innerHTML = "";
+
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.selected = true;
+      placeholder.textContent = type ? `Select a ${pairTypeNames[type]} pair` : "Select a relationship type first";
+      pairList.appendChild(placeholder);
+
+      for (const [gene1, gene2] of records){
+        const option = document.createElement("option");
+        option.value = `${gene1}|${gene2}`;
+        option.textContent = `${gene1} - ${gene2}`;
+        pairList.appendChild(option);
+      }
+
+      pairList.disabled = !type;
+      pairListLabel.textContent = type ? `Gene pair (${records.length})` : "Gene pair";
+    });
+
+    pairList.addEventListener("change", () => {
+      if (!pairList.value) return;
+      const [gene1, gene2] = pairList.value.split("|");
+      geneInput1.value = gene1;
+      geneInput2.value = gene2;
+      queryRelationship();
+    });
+
+    function showQueryMessage(message){
+      resultBox.innerHTML = "";
+      const paragraph = document.createElement("p");
+      paragraph.className = "muted";
+      paragraph.textContent = message;
+      resultBox.appendChild(paragraph);
+    }
+
+    function appendRelationRow(name, value){
+      const row = document.createElement("div");
+      row.className = "relation-row";
+
+      const nameCell = document.createElement("div");
+      nameCell.className = "relation-name";
+      nameCell.textContent = name;
+
+      const valueCell = document.createElement("div");
+      valueCell.className = "relation-value";
+      valueCell.textContent = value;
+
+      row.append(nameCell, valueCell);
+      resultBox.appendChild(row);
+    }
+
+    function zScoreLabel(gene){
+      const value = zScores[gene];
+      return `${gene}: ${typeof value === "number" ? fmtZ(value) : "n.a."}`;
+    }
+
+    function queryRelationship(){
+      const gene1 = geneInput1.value.trim().toUpperCase();
+      const gene2 = geneInput2.value.trim().toUpperCase();
+
+      if (!geneSet.has(gene1) || !geneSet.has(gene2)){
+        showQueryMessage(`Select two genes from the ${label} result set.`);
+        return;
+      }
+      if (gene1 === gene2){
+        showQueryMessage("Select two different genes.");
+        return;
+      }
+
+      geneInput1.value = gene1;
+      geneInput2.value = gene2;
+      const key = [gene1, gene2].sort().join("|");
+      const relation = relationMap.get(key);
+
+      if (!relation){
+        showQueryMessage(`No classified relationship was found for ${gene1} and ${gene2} in the provided ${label} results.`);
+        return;
+      }
+
+      resultBox.innerHTML = "";
+      const heading = document.createElement("div");
+      heading.className = "result-pair";
+      heading.textContent = `${gene1} and ${gene2}`;
+      resultBox.appendChild(heading);
+
+      // Selection pairs: the causal relation and latent confounding cannot be determined.
+      // Latent confounding + causal relation: the direction cannot be determined when the
+      // effect gene is itself under selection (appears in a selection pair); otherwise it is shown.
+      // Latent confounding without a causal relation: no causal relation ("No").
+      let causalText = relation.causal ? relation.causal.replace(" -> ", " → ") : "No";
+      let latentText = relation.latent ? "Identified" : "No";
+      if (relation.latent && relation.causal){
+        const effectGene = relation.causal.split(" -> ")[1];
+        if (selectionGenes.has(effectGene)){
+          causalText = `Cannot be determined: effect gene ${effectGene} is under selection`;
+        }
+      }
+      if (relation.selection){
+        causalText = "Cannot be determined under selection";
+        latentText = "Cannot be determined under selection";
+      }
+      appendRelationRow("Causal relation", causalText);
+      appendRelationRow("Latent confounding", latentText);
+      appendRelationRow("Selection constraint", relation.selection ? "Identified" : "No");
+      if (relation.selection && (gene1 in zScores || gene2 in zScores)){
+        appendRelationRow(`Gene Z-scores (${depmapId})`, `${zScoreLabel(gene1)}; ${zScoreLabel(gene2)}`);
+      }
+    }
+
+    document.getElementById(ids.query).addEventListener("click", queryRelationship);
+    for (const input of [geneInput1, geneInput2]){
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") queryRelationship();
+      });
+    }
+
+    return panel;
   }
-  document.getElementById("hct116Genes").appendChild(geneOptions);
+
+  const cellLinePanels = {
+    hct116: setupCellLine({
+      label: "HCT116",
+      depmapId: "ACH-000971",
+      relations: hct116Relations,
+      zScores: hct116ZScores,
+      ids: {
+        panel: "hct116Panel", gene1: "hctGene1", gene2: "hctGene2", pairType: "hctPairType",
+        pairList: "hctPairList", pairListLabel: "hctPairListLabel", datalist: "hct116Genes",
+        query: "queryRelationship", result: "relationshipResult",
+      },
+    }),
+    k562: setupCellLine({
+      label: "K562",
+      depmapId: "ACH-000551",
+      relations: k562Relations,
+      zScores: k562ZScores,
+      ids: {
+        panel: "k562Panel", gene1: "k562Gene1", gene2: "k562Gene2", pairType: "k562PairType",
+        pairList: "k562PairList", pairListLabel: "k562PairListLabel", datalist: "k562Genes",
+        query: "k562QueryRelationship", result: "k562RelationshipResult",
+      },
+    }),
+  };
 
   cellLineSelect.addEventListener("change", () => {
     const selected = cellLineSelect.value;
-    const showHct116 = selected === "hct116";
-    hct116Panel.hidden = !showHct116;
-    cellLineMessage.hidden = showHct116;
+    for (const [key, panel] of Object.entries(cellLinePanels)) panel.hidden = key !== selected;
+    cellLineMessage.hidden = selected in cellLinePanels;
 
     if (selected === "a549") cellLineMessage.textContent = "A549 results are not available yet.";
-    if (selected === "k562") cellLineMessage.textContent = "K562 results are presented in the illustrative example above.";
   });
-
-  hctPairType.addEventListener("change", () => {
-    const type = hctPairType.value;
-    const records = hct116PairGroups[type] || [];
-    hctPairList.innerHTML = "";
-
-    const placeholder = document.createElement("option");
-    placeholder.value = "";
-    placeholder.selected = true;
-    placeholder.textContent = type ? `Select a ${pairTypeNames[type]} pair` : "Select a relationship type first";
-    hctPairList.appendChild(placeholder);
-
-    for (const [gene1, gene2] of records){
-      const option = document.createElement("option");
-      option.value = `${gene1}|${gene2}`;
-      option.textContent = `${gene1} - ${gene2}`;
-      hctPairList.appendChild(option);
-    }
-
-    hctPairList.disabled = !type;
-    hctPairListLabel.textContent = type ? `Gene pair (${records.length})` : "Gene pair";
-  });
-
-  hctPairList.addEventListener("change", () => {
-    if (!hctPairList.value) return;
-    const [gene1, gene2] = hctPairList.value.split("|");
-    hctGene1.value = gene1;
-    hctGene2.value = gene2;
-    queryHct116Relationship();
-  });
-
-  function showQueryMessage(message){
-    relationshipResult.innerHTML = "";
-    const paragraph = document.createElement("p");
-    paragraph.className = "muted";
-    paragraph.textContent = message;
-    relationshipResult.appendChild(paragraph);
-  }
-
-  function appendRelationRow(label, value){
-    const row = document.createElement("div");
-    row.className = "relation-row";
-
-    const name = document.createElement("div");
-    name.className = "relation-name";
-    name.textContent = label;
-
-    const result = document.createElement("div");
-    result.className = "relation-value";
-    result.textContent = value;
-
-    row.append(name, result);
-    relationshipResult.appendChild(row);
-  }
-
-  function hct116ZScoreLabel(gene){
-    const value = hct116ZScores[gene];
-    return `${gene}: ${typeof value === "number" ? fmtZ(value) : "n.a."}`;
-  }
-
-  function queryHct116Relationship(){
-    const gene1 = hctGene1.value.trim().toUpperCase();
-    const gene2 = hctGene2.value.trim().toUpperCase();
-
-    if (!hct116GeneSet.has(gene1) || !hct116GeneSet.has(gene2)){
-      showQueryMessage("Select two genes from the HCT116 result set.");
-      return;
-    }
-    if (gene1 === gene2){
-      showQueryMessage("Select two different genes.");
-      return;
-    }
-
-    hctGene1.value = gene1;
-    hctGene2.value = gene2;
-    const key = [gene1, gene2].sort().join("|");
-    const relation = hct116RelationMap.get(key);
-
-    if (!relation){
-      showQueryMessage(`No classified relationship was found for ${gene1} and ${gene2} in the provided HCT116 results.`);
-      return;
-    }
-
-    relationshipResult.innerHTML = "";
-    const heading = document.createElement("div");
-    heading.className = "result-pair";
-    heading.textContent = `${gene1} and ${gene2}`;
-    relationshipResult.appendChild(heading);
-
-    // Selection pairs: the causal relation and latent confounding cannot be determined.
-    // Latent confounding + causal relation: the direction cannot be determined when the
-    // effect gene is itself under selection (appears in a selection pair); otherwise it is shown.
-    // Latent confounding without a causal relation: no causal relation ("No").
-    let causalText = relation.causal ? relation.causal.replace(" -> ", " → ") : "No";
-    let latentText = relation.latent ? "Identified" : "No";
-    if (relation.latent && relation.causal){
-      const effectGene = relation.causal.split(" -> ")[1];
-      if (hct116SelectionGenes.has(effectGene)){
-        causalText = `Cannot be determined: effect gene ${effectGene} is under selection`;
-      }
-    }
-    if (relation.selection){
-      causalText = "Cannot be determined under selection";
-      latentText = "Cannot be determined under selection";
-    }
-    appendRelationRow("Causal relation", causalText);
-    appendRelationRow("Latent confounding", latentText);
-    appendRelationRow("Selection constraint", relation.selection ? "Identified" : "No");
-    if (relation.selection){
-      appendRelationRow("Gene Z-scores (ACH-000971)", `${hct116ZScoreLabel(gene1)}; ${hct116ZScoreLabel(gene2)}`);
-    }
-  }
-
-  document.getElementById("queryRelationship").addEventListener("click", queryHct116Relationship);
-  for (const input of [hctGene1, hctGene2]){
-    input.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") queryHct116Relationship();
-    });
-  }
 
   // copy buttons in the Upload Your Results section
   for (const btn of document.querySelectorAll(".copy-btn")){
