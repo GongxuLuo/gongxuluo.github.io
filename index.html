@@ -704,7 +704,7 @@
 
       <div class="pair-summary" aria-label="K562 relationship counts">
         <div class="pair-count">
-          <strong>59</strong>
+          <strong>1</strong>
           <span>Causal pairs</span>
         </div>
         <div class="pair-count">
@@ -724,7 +724,7 @@
             <label for="k562PairType">Relationship type</label>
             <select id="k562PairType" class="pair-browser-select">
               <option value="" selected>Select a relationship type</option>
-              <option value="causal">Causal pairs (59)</option>
+              <option value="causal">Causal pair (1)</option>
               <option value="latent">Latent confounder pairs (2)</option>
               <option value="selection">Selection bias pairs (17)</option>
             </select>
@@ -846,9 +846,10 @@
   // HCT116_ZSCORE_DATA_END
 
   // K562_RELATION_DATA_START
-  // Source: Norman et al. (2019) K562 CRISPRa Perturb-seq; pairs as drawn by plot.py
-  // (per_dag_kci_m.npy + latent/selection/add_pairs lists). Row: [gene1, gene2, causal, latent, selection].
-  const k562Relations = [["ARID1A","CBFA2T3","",0,1],["ARID1A","IKZF3","IKZF3 -> ARID1A",0,0],["BAK1","POU3F2","",0,1],["CBFA2T3","FEV","CBFA2T3 -> FEV",0,0],["CBFA2T3","FOXA3","CBFA2T3 -> FOXA3",0,0],["CBFA2T3","HOXB9","CBFA2T3 -> HOXB9",0,0],["CBFA2T3","LYL1","",0,1],["CBFA2T3","MAP7D1","CBFA2T3 -> MAP7D1",0,0],["CBFA2T3","MIDN","CBFA2T3 -> MIDN",0,0],["CBL","IER5L","CBL -> IER5L",0,0],["CBL","KMT2A","",0,1],["CBL","SPI1","SPI1 -> CBL",0,0],["CDKN1A","CNN1","",0,1],["CDKN1A","CSRNP1","CSRNP1 -> CDKN1A",0,0],["CDKN1C","ZNF318","ZNF318 -> CDKN1C",0,0],["CEBPA","FEV","CEBPA -> FEV",1,0],["CEBPA","SLC38A2","CEBPA -> SLC38A2",0,0],["CEBPB","KIF18B","CEBPB -> KIF18B",0,0],["CELF2","FOXL2","CELF2 -> FOXL2",0,0],["CELF2","IGDCC3","CELF2 -> IGDCC3",0,0],["CELF2","POU3F2","CELF2 -> POU3F2",0,0],["CELF2","SET","CELF2 -> SET",0,0],["CITED1","NCL","CITED1 -> NCL",0,0],["CKS1B","KIF2C","CKS1B -> KIF2C",0,0],["CKS1B","PLK4","PLK4 -> CKS1B",0,0],["CKS1B","SPI1","SPI1 -> CKS1B",0,0],["CNN1","EGR1","CNN1 -> EGR1",0,0],["CNN1","RREB1","CNN1 -> RREB1",0,0],["COL1A1","EGR1","EGR1 -> COL1A1",0,0],["COL2A1","SAMD1","",0,1],["COL2A1","UBASH3A","COL2A1 -> UBASH3A",0,0],["CSRNP1","EGR1","EGR1 -> CSRNP1",0,0],["DUSP9","ELMSAN1","",0,1],["EGR1","ISL2","EGR1 -> ISL2",0,0],["EGR1","JUN","EGR1 -> JUN",0,0],["ETS2","IER5L","IER5L -> ETS2",0,0],["FEV","HOXC13","",0,1],["FEV","IGDCC3","IGDCC3 -> FEV",0,0],["FEV","MAP7D1","",0,1],["FEV","NCL","FEV -> NCL",0,0],["FEV","STIL","",0,1],["FOXA1","TP73","TP73 -> FOXA1",0,0],["FOXL2","SET","FOXL2 -> SET",0,0],["GLB1L2","SLC38A2","SLC38A2 -> GLB1L2",0,0],["HNF4A","TBX3","HNF4A -> TBX3",0,0],["HOXB9","PTPN12","PTPN12 -> HOXB9",0,0],["HOXB9","SLC38A2","SLC38A2 -> HOXB9",0,0],["HOXC13","KMT2A","KMT2A -> HOXC13",0,0],["HOXC13","SET","HOXC13 -> SET",0,0],["IGDCC3","ZC3HAV1","ZC3HAV1 -> IGDCC3",0,0],["IKZF3","TGFBR2","IKZF3 -> TGFBR2",0,0],["IRF1","JUN","IRF1 -> JUN",0,0],["IRF1","POU3F2","IRF1 -> POU3F2",0,0],["JUN","SAMD1","SAMD1 -> JUN",0,0],["KLF1","LYL1","KLF1 -> LYL1",0,0],["KLF1","TMSB4X","",0,1],["KLF1","UBASH3A","KLF1 -> UBASH3A",0,0],["KMT2A","NCL","KMT2A -> NCL",0,0],["KMT2A","SET","KMT2A -> SET",0,0],["MAP4K5","SLC4A1","SLC4A1 -> MAP4K5",0,0],["MAPK1","TMSB4X","",0,1],["MAPK1","ZC3HAV1","ZC3HAV1 -> MAPK1",0,0],["NCL","SAMD1","SAMD1 -> NCL",0,0],["NCL","SET","NCL -> SET",0,0],["OSR2","SAMD1","OSR2 -> SAMD1",0,0],["PRDM1","SET","",0,1],["PTPN1","RHOXF2BB","PTPN1 -> RHOXF2BB",1,0],["PTPN1","SET","PTPN1 -> SET",0,0],["RHOXF2BB","SET","RHOXF2BB -> SET",0,0],["RREB1","ZC3HAV1","",0,1],["SAMD1","UBASH3B","SAMD1 -> UBASH3B",0,0],["SET","ZC3HAV1","",0,1],["SLC38A2","UBASH3A","SLC38A2 -> UBASH3A",0,0],["SPI1","TGFBR2","",0,1],["SPI1","TP73","TP73 -> SPI1",0,0],["SPI1","ZBTB25","SPI1 -> ZBTB25",0,0],["TSC22D1","ZC3HAV1","",0,1]];
+  // Source: Norman et al. (2019) K562 CRISPRa Perturb-seq, GISL output used by plot.py.
+  // Causal: one-directional edges in per_dag_kci_m.npy (m[i][j]=1, m[j][i]=0) only; bidirectional
+  // edges and manually added pairs are not reported. Row: [gene1, gene2, causal, latent, selection].
+  const k562Relations = [["ARID1A","CBFA2T3","",0,1],["BAK1","POU3F2","",0,1],["CBFA2T3","LYL1","",0,1],["CBL","KMT2A","",0,1],["CDKN1A","CNN1","",0,1],["CEBPA","FEV","CEBPA -> FEV",1,0],["COL2A1","SAMD1","",0,1],["DUSP9","ELMSAN1","",0,1],["FEV","HOXC13","",0,1],["FEV","MAP7D1","",0,1],["FEV","STIL","",0,1],["KLF1","TMSB4X","",0,1],["MAPK1","TMSB4X","",0,1],["PRDM1","SET","",0,1],["PTPN1","RHOXF2BB","PTPN1 -> RHOXF2BB",1,0],["RREB1","ZC3HAV1","",0,1],["SET","ZC3HAV1","",0,1],["SPI1","TGFBR2","",0,1],["TSC22D1","ZC3HAV1","",0,1]];
   // K562_RELATION_DATA_END
 
   // K562_ZSCORE_DATA_START
